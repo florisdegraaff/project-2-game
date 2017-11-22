@@ -2,7 +2,7 @@ import pygame
 
 running = True
 
-def run_essentials(event, level, display):
+def run_essentials(event):
 
     global pygame
     global running
@@ -11,7 +11,7 @@ def run_essentials(event, level, display):
     if event.type == pygame.QUIT:
         running = False
         return False
-
+    
     # Input
     if event.type == pygame.KEYDOWN:
         keys = pygame.key.get_pressed()
@@ -21,7 +21,7 @@ def run_essentials(event, level, display):
             running = False
             return False
 
-        # Open debug mode when 'LCRTL', 'LALT' & 'k' buttons are pressed simultaneously
+        # Skip to next level when 'LCRTL', 'LALT' & 'n' buttons are pressed simultaneously
         if keys[pygame.K_LCTRL] and keys[pygame.K_LALT] and keys[pygame.K_n]:
             return False
 
