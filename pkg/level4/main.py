@@ -12,7 +12,6 @@ def run():
 
         # Input
         for event in pygame.event.get():
-
             # Load in the fundemental functions in the game
             running = essentials.run_essentials(event)
 
