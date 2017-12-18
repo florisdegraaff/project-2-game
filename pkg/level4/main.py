@@ -8,6 +8,8 @@ def run():
     global running
     global pygame
 
+    display.set_title('Level 4')
+
     while running == True:
 
         # Input
