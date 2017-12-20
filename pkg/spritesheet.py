@@ -19,7 +19,7 @@ class spritesheet(object):
         return image
 
     # Load a whole bunch of images and return them as a list
-    def images_at(self, rects, colorkey = None):
+    def images_at(self, rects, colorkey = None): 
         return [self.image_at(rect, colorkey) for rect in rects]
 
     # Load a whole strip of images
