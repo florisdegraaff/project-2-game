@@ -4,17 +4,23 @@ clock = essentials.pygame.time.Clock()
 window_size = (1280, 720)
 background_color = (122, 122, 122)
 screenTitle = ""
+window = None
 
 def prepare_screen():
     global window_size
     global background_color
+    global window
 
-    display = essentials.pygame.display.set_mode(window_size)
-    display.fill(background_color)
+    window = essentials.pygame.display.set_mode(window_size)
+    window.fill(background_color)
+
+def prepare_update() :
+    global window
+
+    window.fill(background_color)
 
 def update():
     global clock
-
     essentials.pygame.display.flip()
     clock.tick(30)
     fps = round(clock.get_fps(), 1)

@@ -41,3 +41,6 @@ class timer ():
             return True
         else:
             return False
+
+    def get_time (self):
+        return pygame.time.get_ticks() - self.start_time
