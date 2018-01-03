@@ -11,7 +11,7 @@ def run_essentials(event):
     if event.type == pygame.QUIT:
         running = False
         return False
-    
+
     # Input
     if event.type == pygame.KEYDOWN:
         keys = pygame.key.get_pressed()
@@ -26,3 +26,21 @@ def run_essentials(event):
             return False
 
     return True
+
+class timer ():
+
+    start_time = None
+    timer_length = None
+
+    def __init__ (self, length):
+        self.start_time = pygame.time.get_ticks()
+        self.timer_length = length * 1000
+
+    def check_timer (self):
+        if pygame.time.get_ticks() >= self.start_time + self.timer_length:
+            return True
+        else:
+            return False
+
+    def get_time (self):
+        return pygame.time.get_ticks() - self.start_time
