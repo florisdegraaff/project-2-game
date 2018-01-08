@@ -1,11 +1,12 @@
 from .. import essentials
 from .. import display
+from enemy import Enemy
+from player import Player
+from floor import Floor
+from sidewall import SideWall
+from topandbottomwall import TopAndBottomWall
 from pygame.math import Vector2
-from enemy import *
-from floor import *
-from player import *
-from sidewall import *
-from topandbottomwall import *
+
 running = True
 pygame = essentials.pygame
 
@@ -24,28 +25,32 @@ def run():
     global running
     global pygame
     
+    screen = pygame.display.set_mode((1280, 720))
+    
     playergroup = pygame.sprite.Group()
     all_sprites = pygame.sprite.Group()
+    background = pygame.sprite.Group()
+    
     #Enemy waypoints
     waypoints = [[x1, y1], [x2, y2], [x3, y3]]
-    #the floor
-    floor = Floor(540, -620, all_sprites)
-    
     player = Player(((width / 2), (height / 2)))
-
+    background = pygame.sprite.Group()
     walls = pygame.sprite.Group()
-
+    
     walltop = TopAndBottomWall(540, -620, all_sprites, walls)
     wallbottom = TopAndBottomWall(540, 410, all_sprites, walls)
     wallleft = SideWall((width / 2) - 100, (height / 2) - 930, all_sprites, walls)
     wallright = SideWall((wallleft.rect.x + (1920 - 50)), (height / 2) - 930, all_sprites, walls)
 
     enemy = Enemy((950, -50), waypoints, all_sprites)
+    
+    #the floor
+    floor = Floor(540, -620, background)
 
     camera = Vector2(0, 0)
     
     display.set_title('Level 2')
-    
+   
     while running:
 
 
@@ -81,7 +86,6 @@ def run():
                     player.vel.y = 0
                     player.vel.x = 0
 
-
         all_sprites.update()
 
         # move player horizontal
@@ -105,15 +109,14 @@ def run():
         camera -= player.vel
 
         screen.fill((0, 0, 0))
-        
-        #print(player.rect)
-
+        #draw background
         # draw player
+        for sprite in background:
+            screen.blit(sprite.image, sprite.rect.topleft+camera)
         for sprite in all_sprites:
             screen.blit(sprite.image, sprite.rect.topleft+camera)
-            
-        screen.blit(player.image, player.rect.topleft+camera)
         
+        screen.blit(player.image, player.rect.topleft+camera)
 
             # Load in the fundemental functions in the game
         running = essentials.run_essentials(event)

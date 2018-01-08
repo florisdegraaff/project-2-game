@@ -1,9 +1,21 @@
-class Enemy(pg.sprite.Sprite):
+from .. import essentials
+
+pygame = essentials.pygame
+
+import os
+
+from pygame.math import Vector2
+
+
+width = 1280
+height = 720
+
+class Enemy(pygame.sprite.Sprite):
 
     def __init__(self, pos, waypoints, *groups):
-        super().__init__(*groups)
-        self.image = pg.image.load("enemy.png")
-        self.image = pg.transform.scale(self.image, (int(50), int(50)))
+        super(Enemy, self).__init__(*groups)
+        self.image = pygame.image.load(os.path.join("pkg/level2/images/enemy.png"))
+        self.image = pygame.transform.scale(self.image, (int(50), int(50)))
         self.rect = self.image.get_rect(center=pos)
         self.vel = Vector2(0,0)
         self.max_speed = 5
