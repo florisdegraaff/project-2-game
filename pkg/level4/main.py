@@ -1,5 +1,10 @@
+from random import randint
+
 from .. import essentials
 from .. import display
+
+from .Player import Player
+from .Enemy import Guard, Bullets
 
 running = True
 pygame = essentials.pygame
@@ -10,10 +15,13 @@ def run():
 
     jumping = False
     crawling = False
-    jumptimer = -10
+
+    player = Player ()
+    enemies = []
 
     display.set_title('Level 4')
     timer = essentials.timer(60)
+    enemy_spawn_timer = essentials.timer (0)
 
     while running == True:
 
@@ -36,25 +44,35 @@ def run():
         if running:
             running = not timer.check_timer()
 
+        if enemy_spawn_timer.check_timer():
+            print ("hello")
+            enemy_spawn_timer = essentials.timer(randint(1,3))
+            if randint (0,1) == 0:
+                enemies.append(Guard())
+            else:
+                enemies.append(Bullets())
 
         # Output
         pygame.draw.rect(display.window, (0,0,0), pygame.Rect((0, 680), (1280, 40)))
 
         if crawling:
-            player_size = (100, 100)
-            player_pos = (100, 580)
+            player.crawl()
         elif jumping:
-            player_size = (100, 200)
-            player_pos = (100, 80 + (jumptimer * jumptimer) * 4)
-            jumptimer += 1
-            if jumptimer > 10:
-                jumping = False
-                jumptimer = -10
-        else:
-            player_size = (100, 200)
-            player_pos = (100, 480)
+            jumping = player.jump()
 
-        pygame.draw.rect(display.window, (0,0,0), pygame.Rect(player_pos, player_size))
+        for enemy in enemies:
+            enemy.update()
+            if isinstance (enemy, Guard):
+                if player.rect.colliderect(enemy.guard):
+                    return False
+            else:
+                if player.rect.colliderect(enemy.bullet1) or player.rect.colliderect(enemy.bullet2) or player.rect.colliderect(enemy.bullet3):
+                    return False
+
+        if not running:
+            return True
+
+        player.update()
 
         # Update the display to show the changes you made
         display.update()
