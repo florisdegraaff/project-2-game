@@ -1,6 +1,8 @@
 from .. import essentials
 from .. import display
 
+from .Player import Player
+
 running = True
 pygame = essentials.pygame
 
@@ -10,7 +12,8 @@ def run():
 
     jumping = False
     crawling = False
-    jumptimer = -10
+
+    player = Player ()
 
     display.set_title('Level 4')
     timer = essentials.timer(60)
@@ -41,20 +44,11 @@ def run():
         pygame.draw.rect(display.window, (0,0,0), pygame.Rect((0, 680), (1280, 40)))
 
         if crawling:
-            player_size = (100, 100)
-            player_pos = (100, 580)
+            player.crawl()
         elif jumping:
-            player_size = (100, 200)
-            player_pos = (100, 80 + (jumptimer * jumptimer) * 4)
-            jumptimer += 1
-            if jumptimer > 10:
-                jumping = False
-                jumptimer = -10
-        else:
-            player_size = (100, 200)
-            player_pos = (100, 480)
+            jumping = player.jump()
 
-        pygame.draw.rect(display.window, (0,0,0), pygame.Rect(player_pos, player_size))
+        player.update()
 
         # Update the display to show the changes you made
         display.update()
