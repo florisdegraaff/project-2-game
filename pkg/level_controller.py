@@ -3,6 +3,7 @@ import pkg.essentials as essentials
 
 display.prepare_screen()
 
+import pkg.menu.main as menu
 import pkg.level1.main as level1
 import pkg.level2.main as level2
 import pkg.level3.main as level3
@@ -11,6 +12,8 @@ import pkg.level5.main as level5
 
 current_level = 1
 
+if (essentials.running):
+    menu.run()
 if (essentials.running):
     level1.run()
 if (essentials.running):

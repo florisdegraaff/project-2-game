@@ -28,7 +28,7 @@ def run_essentials(event):
         # Skip to next level when 'LCRTL', 'LALT' & 'n' buttons are pressed simultaneously
         if keys[pygame.K_LCTRL] and keys[pygame.K_LALT] and keys[pygame.K_n]:
             return False
-
+            	
     return True
 
 class timer ():
