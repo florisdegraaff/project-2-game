@@ -1,5 +1,9 @@
 import pygame
-
+#
+import time
+import random
+import os
+#
 running = True
 
 def run_essentials(event):
