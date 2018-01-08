@@ -17,6 +17,8 @@ if (essentials.running):
 if (essentials.running):
     level3.run()
 if (essentials.running):
-    level4.run()
+    completed = False
+    while not completed:
+        completed = level4.run()
 if (essentials.running):
     level5.run()

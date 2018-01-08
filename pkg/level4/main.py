@@ -1,7 +1,10 @@
+from random import randint
+
 from .. import essentials
 from .. import display
 
 from .Player import Player
+from .Enemy import Guard, Bullets
 
 running = True
 pygame = essentials.pygame
@@ -14,9 +17,11 @@ def run():
     crawling = False
 
     player = Player ()
+    enemies = []
 
     display.set_title('Level 4')
     timer = essentials.timer(60)
+    enemy_spawn_timer = essentials.timer (0)
 
     while running == True:
 
@@ -39,6 +44,13 @@ def run():
         if running:
             running = not timer.check_timer()
 
+        if enemy_spawn_timer.check_timer():
+            print ("hello")
+            enemy_spawn_timer = essentials.timer(randint(1,3))
+            if randint (0,1) == 0:
+                enemies.append(Guard())
+            else:
+                enemies.append(Bullets())
 
         # Output
         pygame.draw.rect(display.window, (0,0,0), pygame.Rect((0, 680), (1280, 40)))
@@ -47,6 +59,18 @@ def run():
             player.crawl()
         elif jumping:
             jumping = player.jump()
+
+        for enemy in enemies:
+            enemy.update()
+            if isinstance (enemy, Guard):
+                if player.rect.colliderect(enemy.guard):
+                    return False
+            else:
+                if player.rect.colliderect(enemy.bullet1) or player.rect.colliderect(enemy.bullet2) or player.rect.colliderect(enemy.bullet3):
+                    return False
+
+        if not running:
+            return True
 
         player.update()
 
