@@ -8,6 +8,8 @@ def run():
     global running
     global pygame
 
+    display.set_title('Level 1')
+
     while running == True:
 
         # Input
@@ -17,7 +19,7 @@ def run():
             running = essentials.run_essentials(event)
 
         # Output
-
+        
 
         # Update the display to show the changes you made
         display.update()

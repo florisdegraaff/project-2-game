@@ -43,8 +43,11 @@ def run():
     enemy = Enemy((950, -50), waypoints, all_sprites)
 
     camera = Vector2(0, 0)
-
+    
+    display.set_title('Level 2')
+    
     while running:
+
 
         # Input
         for event in pygame.event.get():
