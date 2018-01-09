@@ -1,4 +1,4 @@
-import pkg.essentials as essentials
+import pkg.foundation.essentials as essentials
 
 clock = essentials.pygame.time.Clock()
 window_size = (1280, 720)

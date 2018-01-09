@@ -1,7 +1,7 @@
-from random import randint
+import pkg.foundation.display as display
+import pkg.foundation.essentials as essentials
 
-from .. import essentials
-from .. import display
+from random import randint
 
 from .Player import Player
 from .Enemy import Guard, Bullets
@@ -31,6 +31,8 @@ def run():
         for event in pygame.event.get():
             # Load in the fundemental functions in the game
             running = essentials.run_essentials(event)
+            if not running:
+                return True
 
             if event.type == pygame.KEYDOWN:
                 if not jumping:

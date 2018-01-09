@@ -1,4 +1,4 @@
-from .. import essentials
+import pkg.foundation.essentials as essentials
 
 pygame = essentials.pygame
 

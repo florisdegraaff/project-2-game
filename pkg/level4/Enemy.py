@@ -1,5 +1,5 @@
-from .. import essentials
-from .. import display
+import pkg.foundation.essentials as essentials
+import pkg.foundation.display as display
 
 pygame = essentials.pygame
 

@@ -1,6 +1,5 @@
-from .. import essentials
-from .. import display
-from .. import level_controller
+from pkg.foundation import essentials
+from pkg.foundation import display
 
 import pkg.level1.main as level1
 import pkg.level2.main as level2
@@ -49,21 +48,20 @@ def run():
 
         # Input
         for event in pygame.event.get():
-            running = essentials.run_essentials(event)
+            running = essentials.run_essentials(event, False)
+            if not running:
+                return True
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
                 if lvl1.collidepoint(x, y):
-                    level1.run()
+                    return 0
                 if lvl2.collidepoint(x, y):
-                    level2.run()
+                    return 1
                 if lvl3.collidepoint(x, y):
-                    level3.run()
+                    return 2
                 if lvl4.collidepoint(x, y):
-                    completed = False
-                    while not completed:
-                        completed = level4.run()
-                        print ("death")
+                    return 3
                 if lvl5.collidepoint(x, y):
-                    level5.run()
+                    return 4
 
         display.update()
