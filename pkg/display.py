@@ -22,7 +22,7 @@ def prepare_update() :
 def update():
     global clock
     essentials.pygame.display.flip()
-    clock.tick(30)
+    clock.tick(60)
     fps = round(clock.get_fps(), 1)
     essentials.pygame.display.set_caption("fps: " + str(fps) + " - " + screenTitle)
 
