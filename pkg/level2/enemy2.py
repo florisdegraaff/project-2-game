@@ -10,20 +10,20 @@ from pygame.math import Vector2
 width = 1280
 height = 720
 
-class Enemy(pygame.sprite.Sprite):
+class Enemy2(pygame.sprite.Sprite):
 
     def __init__(self, pos, waypoints, *groups):
-        super(Enemy, self).__init__(*groups)
+        super(Enemy2, self).__init__(*groups)
         self.image = pygame.image.load(os.path.join("pkg/level2/images/enemy.png"))
         self.image = pygame.transform.scale(self.image, (int(50), int(50)))
         self.rect = self.image.get_rect(center=pos)
         self.vel = Vector2(0,0)
-        self.max_speed = 5
+        self.max_speed = 15
         self.pos = Vector2(pos)
         self.waypoints = waypoints
         self.waypoint_index = 0
         self.target = self.waypoints[self.waypoint_index]
-        self.target_radius = 50
+        self.target_radius = 10
         self.rect.x = width / 2
         self.rect.y = height / 2
 
