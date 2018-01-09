@@ -24,5 +24,6 @@ if (essentials.running):
     completed = False
     while not completed:
         completed = level4.run()
+        print ("death")
 if (essentials.running):
     level5.run()

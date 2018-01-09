@@ -1,7 +1,7 @@
 from .. import essentials
 from .. import display
 from .. import level_controller
-#genieten maar
+
 import pkg.level1.main as level1
 import pkg.level2.main as level2
 import pkg.level3.main as level3
@@ -36,9 +36,9 @@ def run():
     gameDisplay.blit(levelimg3,(588,300))
     gameDisplay.blit(levelimg4,(764,300))
     gameDisplay.blit(levelimg5,(940,300))
-    
+
     pygame.display.flip()
-    
+
     lvl1 = pygame.Rect(236,300,140,140)
     lvl2 = pygame.Rect(412,300,140,140)
     lvl3 = pygame.Rect(588,300,140,140)
@@ -59,7 +59,10 @@ def run():
                 if lvl3.collidepoint(x, y):
                     level3.run()
                 if lvl4.collidepoint(x, y):
-                    level4.run()
+                    completed = False
+                    while not completed:
+                        completed = level4.run()
+                        print ("death")
                 if lvl5.collidepoint(x, y):
                     level5.run()
 

@@ -30,8 +30,6 @@ def run():
     global running
     global pygame
 
-
-
     screen = pygame.display.set_mode((1280, 720))
 
     #groups

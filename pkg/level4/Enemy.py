@@ -12,7 +12,6 @@ class Guard:
     def update (self):
         self.guard = pygame.draw.rect(display.window, (0,0,0), pygame.Rect((self.position[0], self.position[1]), self.size))
         self.position [0] -= 20
-        print (self.position)
 
 class Bullets:
 
@@ -25,4 +24,3 @@ class Bullets:
         self.bullet2 = pygame.draw.rect(display.window, (0,0,0), pygame.Rect((self.position[0], self.position[1] + 100), self.size))
         self.bullet3 = pygame.draw.rect(display.window, (0,0,0), pygame.Rect((self.position[0], self.position[1] + 200), self.size))
         self.position [0] -= 20
-        print (self.position)
