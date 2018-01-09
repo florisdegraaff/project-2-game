@@ -1,11 +1,11 @@
 from .. import essentials
 from .. import display
-from enemy2 import Enemy2
-from enemy import Enemy
-from player import Player
-from floor import Floor
-from sidewall import SideWall
-from topandbottomwall import TopAndBottomWall
+from .enemy2 import Enemy2
+from .enemy import Enemy
+from .player import Player
+from .floor import Floor
+from .sidewall import SideWall
+from .topandbottomwall import TopAndBottomWall
 from pygame.math import Vector2
 
 running = True
