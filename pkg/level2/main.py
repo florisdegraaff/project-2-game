@@ -7,6 +7,8 @@ from .floor import Floor
 from .sidewall import SideWall
 from .topandbottomwall import TopAndBottomWall
 from pygame.math import Vector2
+from .horizontalwall import HorizontalWall
+from .verticalwall import VerticalWall
 
 running = True
 pygame = essentials.pygame
@@ -21,6 +23,7 @@ x3 = 1100
 y3 = 150
 x = 0
 y = 0
+
 #settings text shown when hit by enemy
 pygame.font.init()
 myfont = pygame.font.SysFont('Comic Sans MS', 30)
@@ -51,6 +54,9 @@ def run():
     wallbottom = TopAndBottomWall(540, 410, all_sprites, walls)
     wallleft = SideWall((width / 2) - 100, (height / 2) - 930, all_sprites, walls)
     wallright = SideWall((wallleft.rect.x + (1920 - 50)), (height / 2) - 930, all_sprites, walls)
+    wallhorizontal1 = HorizontalWall(700, 200, all_sprites, walls)
+    wallvertical1 = VerticalWall(1000, 200, all_sprites, walls)
+
     #enemy's
     enemy = Enemy((950, -50), waypoints, enemygroup)
     enemy2 = Enemy2((1900, -100), waypoints2, enemygroup)
@@ -69,7 +75,9 @@ def run():
             if event.type == pygame.QUIT:
                 done = True
             #player movement
+
             elif event.type == pygame.KEYDOWN:
+                counter = 0
                 if event.key == pygame.K_d:
                     player.vel.x = 5
                     player.vel.y = 0
@@ -121,7 +129,6 @@ def run():
             player.rect.y -= player.vel.y
             # reset speed
             player.vel.y = 0
-
 
         camera -= player.vel
 
