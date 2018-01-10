@@ -25,6 +25,8 @@ class LevelController:
     def load_level (self, level = 0):
         self.current_level = level
         completed = False
+        if completed == False:
+            self.levels[level].turtorial()
         while not completed:
             completed = self.levels[level].run()
         self.current_level = self.current_level + 1
