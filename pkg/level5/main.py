@@ -31,15 +31,15 @@ bomb = pygame.image.load('files/images/bomb.png')
 
 def chopper(x,y):
     display.window.blit(choppah,(x,y))
-	
+
 def enemys(enemyx, enemyy, enemyh, enemyw):
     display.window.blit(other_choppah, [enemyx, enemyy, enemyh, enemyw])
-		
+
 
 def bombs(bombx, bomby, bombh, bombw):
     display.window.blit(bomb, [bombx, bomby, bombh, bombw])
 
-def turtorial():
+def tutorial():
     background.draw(display.window, index % background.totalCellCount, 0, 0, CENTER_HANDLE)
     message_display("continuously press ARROW_UP to fly upwards", 35, 300)
     time.sleep(3)
@@ -49,9 +49,9 @@ def turtorial():
 def run():
     global running
     global pygame
-    
+
     display.set_title("Level 5")
- 
+
     x = (1500 * 0.1)
     y = (900 * 0.4)
     running = True
@@ -61,11 +61,11 @@ def run():
     x_change = 0
     y_change = 0
     index = 0
-    
+
     power = 0
     choppah_width = 245
     choppah_height = 79
-	
+
     enemy_turbo = 2
     enemy_startx = 1800
     enemy_starty = random.randrange(50, display_height - 50)
@@ -83,7 +83,7 @@ def run():
 
     pygame.mixer.Channel(0).play(pygame.mixer.Sound('files/sounds/victory.wav'))
     pygame.mixer.Channel(1).play(pygame.mixer.Sound('files/sounds/coptah.wav'))
-    
+
     while running == True:
         background.draw(display.window, index % background.totalCellCount, 0, 0, CENTER_HANDLE)
 
@@ -92,7 +92,7 @@ def run():
             running = essentials.run_essentials(event)
             if event.type == pygame.QUIT:
                 running = False
-            
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     power_change = 0.25
@@ -107,7 +107,7 @@ def run():
         x += x_change
         bomb_starty -= bomb_speed
         enemy_startx -= enemy_speed
-        
+
         if (ticks > 600 and ticks <= 1200):
             enemy_speed = 12
         if (ticks > 1200):
@@ -124,11 +124,11 @@ def run():
             enemy_starty -= 1.2
         if (enemy_starty < y):
             enemy_starty += 1.2
-        
+
         if enemy_startx < -250:
             enemy_starty = random.randrange(0, display_height - 100)
             enemy_startx = 1500
-        
+
         choepah.draw(display.window, index % choepah.totalCellCount, x, y, CENTER_HANDLE)
         enemy.draw(display.window, index % enemy.totalCellCount, enemy_startx, enemy_starty, CENTER_HANDLE)
 
@@ -138,7 +138,7 @@ def run():
         if y < enemy_starty + 79 and (enemy_startx - 150) < x + 79 and (enemy_startx) + 245 > x:
             if enemy_starty < y + 79 and (enemy_startx - 130)< x + 79 and (enemy_startx) + 245 > x:
                 return False
-            
+
         if (ticks == 1200):
             running = False
             message_display("The copts are pissed, brace yourself!", 40, 300)

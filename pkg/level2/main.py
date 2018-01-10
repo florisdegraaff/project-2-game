@@ -158,3 +158,6 @@ def run():
 
         # Update the display to show the changes you made
         display.update()
+
+def tutorial():
+    print ("tutorial")
