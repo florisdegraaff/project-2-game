@@ -148,7 +148,8 @@ def run():
         if pygame.sprite.spritecollide(player, enemygroup, False):
             print("collision")
             screen.blit(textsurface,(600,300))
-
+            return False
+            
         #update all the groups
         enemygroup.update()
         all_sprites.update()
