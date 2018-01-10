@@ -11,6 +11,8 @@ def run():
     display.set_title('Level 3')
 
     while running == True:
+        running = False
+        return True
 
         # Input
         for event in pygame.event.get():
@@ -25,3 +27,6 @@ def run():
 
         # Update the display to show the changes you made
         display.update()
+
+def tutorial ():
+    print ("tutorial")
