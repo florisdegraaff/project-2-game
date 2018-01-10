@@ -26,8 +26,8 @@ y = 0
 
 #settings text shown when hit by enemy
 pygame.font.init()
-myfont = pygame.font.SysFont('Comic Sans MS', 30)
-textsurface = myfont.render('Some Text', False, (0, 0, 0))
+myfont = pygame.font.SysFont('Comic Sans MS', 100)
+textsurface = myfont.render('You Got Caught', False, (0, 0, 0))
 
 def run():
     global running
@@ -48,9 +48,9 @@ def run():
     enemygroup = pygame.sprite.Group()
 
     #Enemy waypoints
-    waypoints = [[x1, y1], [x2, y2], [x3, y3]]
+    waypoints = [[665, 65], [620, -540], [735, -540], [300, 300]]
     #Enemy2 waypoints
-    waypoints2 = [[1700, 300], [1900, -100], [1500, 300]]
+    waypoints2 = [[1150, 160],[1215, -280], [1630, -280], [1935, -75], [1800, 160]]
     #player position
     player = Player(((width / 2), (height / 2)))
 
@@ -191,11 +191,13 @@ def run():
 
         #collision with enemy
         if pygame.sprite.spritecollide(player, enemygroup, False):
-            screen.blit(textsurface,(600,300))
+            screen.blit(textsurface,(300, 300))
             display.update()
             time.sleep(3)
             return False
+
         print(player.rect)
+
             # Load in the fundemental functions in the game
         running = essentials.run_essentials(event)
 

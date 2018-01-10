@@ -18,7 +18,7 @@ class Enemy2(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (int(50), int(50)))
         self.rect = self.image.get_rect(center=pos)
         self.vel = Vector2(0,0)
-        self.max_speed = 15
+        self.max_speed = 5
         self.pos = Vector2(pos)
         self.waypoints = waypoints
         self.waypoint_index = 0
