@@ -10,9 +10,9 @@ from pygame.math import Vector2
 from .horizontalwall import HorizontalWall
 from .verticalwall import VerticalWall
 import time
+
 running = True
 pygame = essentials.pygame
-2
 width = 1280
 height = 720
 x1 = 850
@@ -44,7 +44,9 @@ def run():
     all_sprites = pygame.sprite.Group()
     background = pygame.sprite.Group()
     walls = pygame.sprite.Group()
+    levelwalls = pygame.sprite.Group()
     enemygroup = pygame.sprite.Group()
+
     #Enemy waypoints
     waypoints = [[x1, y1], [x2, y2], [x3, y3]]
     #Enemy2 waypoints
@@ -53,13 +55,42 @@ def run():
     player = Player(((width / 2), (height / 2)))
 
 
-    #walls
+    #side, top and bottom walls
     walltop = TopAndBottomWall(540, -620, all_sprites, walls)
     wallbottom = TopAndBottomWall(540, 410, all_sprites, walls)
     wallleft = SideWall((width / 2) - 100, (height / 2) - 930, all_sprites, walls)
     wallright = SideWall((wallleft.rect.x + (1920 - 50)), (height / 2) - 930, all_sprites, walls)
-    wallhorizontal1 = HorizontalWall(700, 200, all_sprites, walls)
-    wallvertical1 = VerticalWall(1000, 200, all_sprites, walls)
+
+    ##horizontal and vertical walls
+    #three in the beginning of the level
+    wallvertical1 = VerticalWall(740, 230, levelwalls, walls)
+    wallhorizontal1 = HorizontalWall(740, 180, levelwalls, walls)
+    wallvertical2 = VerticalWall(940, 30, levelwalls, walls)
+
+    #top part of the level
+    wallvertical3 = VerticalWall(790, -370, levelwalls, walls)
+    wallhorizontal2 = HorizontalWall(840, -370, levelwalls, walls)
+    wallhorizontal3 = HorizontalWall(1040, -370, levelwalls, walls)
+    wallhorizontal4 = HorizontalWall(1240, -370, levelwalls, walls)
+    wallhorizontal5 = HorizontalWall(1440, -370, levelwalls, walls)
+    wallhorizontal6 = HorizontalWall(1640, -370, levelwalls, walls)
+    wallvertical3 = VerticalWall(1840, -370, levelwalls, walls)
+    wallvertical4 = VerticalWall(2140, -370, levelwalls, walls)
+
+    #bottom part of the level
+    wallvertical5 = VerticalWall(1190, 230, levelwalls, walls)
+    wallhorizontal7 = HorizontalWall(1690, 230, levelwalls, walls)
+    wallhorizontal8 = HorizontalWall(2240, 230, levelwalls, walls)
+
+    #big block in the middle
+    wallhorizontal9 = HorizontalWall(1340, -70, levelwalls, walls)
+    wallhorizontal10 = HorizontalWall(1340, -20, levelwalls, walls)
+    wallhorizontal11 = HorizontalWall(1340, 30, levelwalls, walls)
+    wallhorizontal12 = HorizontalWall(1340, 80, levelwalls, walls)
+
+    #small block in the middle
+    wallhorizontal13 = HorizontalWall(2040, -20, levelwalls, walls)
+    wallhorizontal14 = HorizontalWall(2040, 30, levelwalls, walls)
 
     #enemy's
     enemy = Enemy((950, -50), waypoints, enemygroup)
@@ -81,9 +112,7 @@ def run():
             if not running:
                 return True
             #player movement
-
             elif event.type == pygame.KEYDOWN:
-                counter = 0
                 if event.key == pygame.K_d:
                     player.vel.x = 5
                     player.vel.y = 0
@@ -139,8 +168,11 @@ def run():
         camera -= player.vel
 
         screen.fill((0, 0, 0))
+
         #draw background
         for sprite in background:
+            screen.blit(sprite.image, sprite.rect.topleft+camera)
+        for sprite in levelwalls:
             screen.blit(sprite.image, sprite.rect.topleft+camera)
         # draw player and walls
         for sprite in all_sprites:
@@ -148,9 +180,7 @@ def run():
         #draw enemy's
         for sprite in enemygroup:
             screen.blit(sprite.image, sprite.rect.topleft+camera)
-        screen.blit(player.image, player.rect.topleft+camera)
-
-
+            screen.blit(player.image, player.rect.topleft+camera)
 
         #update all the groups
         enemygroup.update()
@@ -158,18 +188,18 @@ def run():
         playergroup.update()
         background.update()
         walls.update()
-        
+
+        #collision with enemy
         if pygame.sprite.spritecollide(player, enemygroup, False):
             screen.blit(textsurface,(600,300))
-            display.update
+            display.update()
             time.sleep(3)
-
             return False
+        print(player.rect)
             # Load in the fundemental functions in the game
         running = essentials.run_essentials(event)
 
         # Output
-
 
         # Update the display to show the changes you made
         display.update()
