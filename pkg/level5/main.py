@@ -29,22 +29,22 @@ background = spritesheet("files/images/background.png", 6, 1)
 CENTER_HANDLE = 0
 bomb = pygame.image.load('files/images/bomb.png')
 
-def chopper(x,y):
-    display.window.blit(choppah,(x,y))
-	
-def enemys(enemyx, enemyy, enemyh, enemyw):
-    display.window.blit(other_choppah, [enemyx, enemyy, enemyh, enemyw])
-		
-
 def bombs(bombx, bomby, bombh, bombw):
     display.window.blit(bomb, [bombx, bomby, bombh, bombw])
 
+def lose(cause):
+    msg = "Hit " + cause
+    message_display(msg, 35, 300)
+    time.sleep(2)
+    
 def turtorial():
-    background.draw(display.window, index % background.totalCellCount, 0, 0, CENTER_HANDLE)
-    message_display("continuously press ARROW_UP to fly upwards", 35, 300)
-    time.sleep(3)
-    message_display("ARROW_LEFT and ARROW_RIGHT speak for themselves", 35, 400)
-    time.sleep(3)
+    background.draw(display.window, 1 % background.totalCellCount, 0, 0, CENTER_HANDLE)
+    message_display("continuously press ARROW_UP to fly upwards", 35, 200)
+    time.sleep(1)
+    message_display("Press ARROW_LEFT/ARROW_RIGHT to fly left/right", 35, 300)
+    time.sleep(1)
+    message_display("Dont hit a copter or bomb and survive for one minute to escape", 35, 400)
+    time.sleep(1)
 
 def run():
     global running
@@ -52,8 +52,8 @@ def run():
     
     display.set_title("Level 5")
  
-    x = (1500 * 0.1)
-    y = (900 * 0.4)
+    x, y = (1500 * 0.1),(900 * 0.4)
+    
     running = True
     restartGame = False
     ticks = 0
@@ -81,10 +81,11 @@ def run():
     bomb_height = 93
     bomb_width = 25
 
-    pygame.mixer.Channel(0).play(pygame.mixer.Sound('files/sounds/victory.wav'))
+    #pygame.mixer.Channel(0).play(pygame.mixer.Sound('files/sounds/victory.wav'))
     pygame.mixer.Channel(1).play(pygame.mixer.Sound('files/sounds/coptah.wav'))
     
     while running == True:
+
         background.draw(display.window, index % background.totalCellCount, 0, 0, CENTER_HANDLE)
 
         # Input
@@ -107,19 +108,10 @@ def run():
         x += x_change
         bomb_starty -= bomb_speed
         enemy_startx -= enemy_speed
-        
-        if (ticks > 600 and ticks <= 1200):
-            enemy_speed = 12
-        if (ticks > 1200):
-            enemy_speed = 13
-            if y < (bomb_starty) + 93 and (bomb_startx - 0) < x + 93 and bomb_startx + 25 > x:
-                if (bomb_starty) < y + 93 and (bomb_startx - 0)< x + 93 and bomb_startx + 25 > x:
-                    message_display("bomb", 90, 400)
-                    restartGame = True
-            bombs(bomb_startx, bomb_starty, bomb_height, bomb_width)
-            if bomb_starty > display_height + 100:
-                bomb_startx = random.randrange(0, display_width - 100)
-                bomb_starty = 0
+            
+        if (bomb_starty > display_height + 100):
+            bomb_startx = random.randrange(0, display_width - 100)
+            bomb_starty = 0
         if (enemy_starty > y):
             enemy_starty -= 1.2
         if (enemy_starty < y):
@@ -128,22 +120,36 @@ def run():
         if enemy_startx < -250:
             enemy_starty = random.randrange(0, display_height - 100)
             enemy_startx = 1500
-        
+            
+        #draw entities
+        bombRect = pygame.draw.rect(display.window, (0,0,0), (bomb_startx,bomb_starty,bomb_width,bomb_height))
+        bombs(bomb_startx, bomb_starty, bomb_height, bomb_width)
+        choepahRect = pygame.draw.rect(display.window, (0,0,0), (x,y,choppah_width,choppah_height))
         choepah.draw(display.window, index % choepah.totalCellCount, x, y, CENTER_HANDLE)
+        enemyRect = pygame.draw.rect(display.window, (0,0,0), (enemy_startx,enemy_starty,enemy_width,enemy_height))
         enemy.draw(display.window, index % enemy.totalCellCount, enemy_startx, enemy_starty, CENTER_HANDLE)
 
+        if (ticks > 600 and ticks <= 1200):
+            enemy_speed = 12
+        if (ticks > 100):
+            enemy_speed = 13
+            if choepahRect.colliderect(bombRect):
+                lose("by bomb")
+                return False
+            
         if x > display_width - 245 or x < -50 or y < 0 or y > display_height:
+            lose("the border")
             return False
 
-        if y < enemy_starty + 79 and (enemy_startx - 150) < x + 79 and (enemy_startx) + 245 > x:
-            if enemy_starty < y + 79 and (enemy_startx - 130)< x + 79 and (enemy_startx) + 245 > x:
-                return False
+        if choepahRect.colliderect(enemyRect):
+            lose("by copter")
+            return False
             
         if (ticks == 1200):
             running = False
-            message_display("The copts are pissed, brace yourself!", 40, 300)
-            pygame.mixer.Channel(0).stop()
-            pygame.mixer.Channel(2).play(pygame.mixer.Sound('files/sounds/thestruggle.wav'))
+            message_display("The copts are pissed!", 40, 300)
+            #pygame.mixer.Channel(0).stop()
+            #pygame.mixer.Channel(2).play(pygame.mixer.Sound('files/sounds/thestruggle.wav'))
             time.sleep(3)
             running = True
 
