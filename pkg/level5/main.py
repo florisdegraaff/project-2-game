@@ -1,5 +1,6 @@
-from .. import essentials
-from .. import display
+import pkg.foundation.display as display
+import pkg.foundation.essentials as essentials
+
 import time
 import random
 import os
@@ -18,7 +19,7 @@ gameDisplay = pygame.display.set_mode((display_width, display_height))
 W, H = 1280, 800
 HW, HH = W / 2, H / 2
 AREA = W * H
-        
+
 class spritesheet:
     def __init__(self, filename, cols, rows):
         self.sheet = pygame.image.load(filename).convert_alpha()
@@ -37,7 +38,7 @@ class spritesheet:
             (0, 0), (-hw, 0), (-w, 0),
             (0, -hh), (-hw, -hh), (-w, -hh),
             (0, -h), (-hw, -h), (-w, -h),])
-        
+
     def draw(self, surface, cellIndex, x, y, handle = 0):
         surface.blit(self.sheet, (x + self.handle[handle][0], y + self.handle[handle][1]), self.cells[cellIndex])
 
@@ -51,29 +52,29 @@ bomb = pygame.image.load('files/images/bomb.png')
 
 def chopper(x,y):
     gameDisplay.blit(choppah,(x,y))
-	
+
 def enemys(enemyx, enemyy, enemyh, enemyw):
     gameDisplay.blit(other_choppah, [enemyx, enemyy, enemyh, enemyw])
-		
+
 
 def bombs(bombx, bomby, bombh, bombw):
     gameDisplay.blit(bomb, [bombx, bomby, bombh, bombw])
-    
+
 def text_objects(text, font):
     textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
-    
+
 def message_display(text, size, y):
     largeText = pygame.font.Font('freesansbold.ttf',size)
     TextSurf, TextRect = text_objects(text, largeText)
     TextRect.center = ((display_width/2), y)
     gameDisplay.blit(TextSurf, TextRect)
     pygame.display.update()
-	
+
 def run():
     global running
     global pygame
-    
+
     running = True
     restartGame = False
     ticks = 0
@@ -81,11 +82,11 @@ def run():
     x_change = 0
     y_change = 0
     index = 0
-    
+
     power = 0
     choppah_width = 245
     choppah_height = 79
-	
+
     enemy_turbo = 2
     enemy_startx = 1800
     enemy_starty = random.randrange(50, display_height - 50)
@@ -100,10 +101,10 @@ def run():
     bomb_speed = -5
     bomb_height = 93
     bomb_width = 25
-    
+
     pygame.mixer.Channel(0).play(pygame.mixer.Sound('files/sounds/victory.wav'))
     pygame.mixer.Channel(1).play(pygame.mixer.Sound('files/sounds/coptah.wav'))
-    
+
     background.draw(gameDisplay, index % background.totalCellCount, 0, 0, CENTER_HANDLE)
     message_display("continuously press ARROW_UP to fly upwards", 35, 300)
     time.sleep(3)
@@ -113,16 +114,14 @@ def run():
     y = (900 * 0.4)
 
     while running == True:
-        
+
         background.draw(gameDisplay, index % background.totalCellCount, 0, 0, CENTER_HANDLE)
 
         # Input
         for event in pygame.event.get():
             running = essentials.run_essentials(event)
-            if event.type == pygame.QUIT:
-                running = False
-
-            running = essentials.run_essentials(event)
+            if not running:
+                return True
 
         if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
@@ -138,7 +137,7 @@ def run():
         x += x_change
         bomb_starty -= bomb_speed
         enemy_startx -= enemy_speed
-        
+
         if (ticks > 600 and ticks <= 1200):
             enemy_speed = 12
         if (ticks > 1200):
@@ -155,11 +154,11 @@ def run():
             enemy_starty -= 1.2
         if (enemy_starty < y):
             enemy_starty += 1.2
-        
+
         if enemy_startx < -250:
             enemy_starty = random.randrange(0, display_height - 100)
             enemy_startx = 1500
-        
+
         choepah.draw(gameDisplay, index % choepah.totalCellCount, x, y, CENTER_HANDLE)
         enemy.draw(gameDisplay, index % enemy.totalCellCount, enemy_startx, enemy_starty, CENTER_HANDLE)
 
@@ -168,8 +167,8 @@ def run():
 
         if y < enemy_starty + 79 and (enemy_startx - 150) < x + 79 and (enemy_startx) + 245 > x:
             if enemy_starty < y + 79 and (enemy_startx - 130)< x + 79 and (enemy_startx) + 245 > x:
-                
-                restartGame = True         
+
+                restartGame = True
         if (ticks == 1200):
             running = False
             message_display("The copts are pissed, brace yourself!", 40, 300)
@@ -177,7 +176,7 @@ def run():
             pygame.mixer.Channel(2).play(pygame.mixer.Sound('files/sounds/thestruggle.wav'))
             time.sleep(3)
             running = True
-            
+
         if (restartGame):
             message_display("U DIED", 40, 300)
             time.sleep(3)
@@ -196,7 +195,7 @@ def run():
             enemy_startx = 1500
             enemy_starty = random.randrange(0, display_height)
             restartGame = False
-            
+
         index += 1
         ticks += 1
         # Update the display to show the changes you made

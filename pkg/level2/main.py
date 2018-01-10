@@ -1,5 +1,5 @@
-from .. import essentials
-from .. import display
+import pkg.foundation.display as display
+import pkg.foundation.essentials as essentials
 from .enemy2 import Enemy2
 from .enemy import Enemy
 from .player import Player
@@ -72,8 +72,9 @@ def run():
 
         # Input
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True
+            running = essentials.run_essentials(event)
+            if not running:
+                return True
             #player movement
 
             elif event.type == pygame.KEYDOWN:
