@@ -9,7 +9,7 @@ from .topandbottomwall import TopAndBottomWall
 from pygame.math import Vector2
 from .horizontalwall import HorizontalWall
 from .verticalwall import VerticalWall
-
+import time
 running = True
 pygame = essentials.pygame
 2
@@ -32,6 +32,10 @@ textsurface = myfont.render('Some Text', False, (0, 0, 0))
 def run():
     global running
     global pygame
+
+    timer = essentials.timer(3)
+    if timer.check_timer:
+        print ("timer is done")
 
     screen = pygame.display.set_mode((1280, 720))
 
@@ -63,6 +67,7 @@ def run():
 
     #the floor
     floor = Floor(540, -620, background)
+
     #camera
     camera = Vector2(0, 0)
 
@@ -145,19 +150,21 @@ def run():
             screen.blit(sprite.image, sprite.rect.topleft+camera)
         screen.blit(player.image, player.rect.topleft+camera)
 
-        #player collision with enemy
-        if pygame.sprite.spritecollide(player, enemygroup, False):
-            print("collision")
-            screen.blit(textsurface,(600,300))
-            return False
-            
+
+
         #update all the groups
         enemygroup.update()
         all_sprites.update()
         playergroup.update()
         background.update()
         walls.update()
+        
+        if pygame.sprite.spritecollide(player, enemygroup, False):
+            screen.blit(textsurface,(600,300))
+            display.update
+            time.sleep(3)
 
+            return False
             # Load in the fundemental functions in the game
         running = essentials.run_essentials(event)
 
