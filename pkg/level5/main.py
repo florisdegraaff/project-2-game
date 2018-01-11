@@ -62,7 +62,7 @@ def run():
     display.set_title("Level 5")
 
     #player configuration
-    x, y = (1500 * 0.1),(900 * 0.4)
+    x, y = (100),(620)
     choppah_width = 245
     choppah_height = 79
     power = 0
@@ -119,14 +119,17 @@ def run():
         #set the new position based on direction change
         power += power_change
         #player y pos remains same, x pos goes forward on game win
-        if (ticks > 200):
+        if (ticks > 3000):
             power = 0
             x_change = 5
-        y += power
-        x += x_change
-        bomb_starty -= bomb_speed
-        enemy_startx -= enemy_speed
-            
+        if (ticks < 120):
+            x += 0.6
+            y -= 2.5
+            y += power
+            x += x_change
+            bomb_starty -= bomb_speed
+            enemy_startx -= enemy_speed
+
         if (bomb_starty > display_height + 100):
             bomb_startx = random.randrange(0, display_width - 100)
             bomb_starty = 0
@@ -153,11 +156,11 @@ def run():
         enemy.draw(display.window, index % enemy.totalCellCount, enemy_startx, enemy_starty, CENTER_HANDLE)
             
         #after 20 seconds enemy copters speedup
-        if (ticks > 1200 and ticks <= 2400):
+        if (ticks > 1000 and ticks <= 2000):
             enemy_speed = 12
 
         #after 40 seconds 
-        if (ticks > 2400):
+        if (ticks > 2000):
             enemy_speed = 13
             #when player collides with bomb, restart level
             bombs(bomb_startx, bomb_starty, bomb_height, bomb_width)
@@ -165,7 +168,7 @@ def run():
                 lose("by bomb")
                 return False
         #display message after 40 seconds
-        if (ticks == 2400):
+        if (ticks == 2000):
             running = False
             message_display("The copts are pissed!", 40, 300, (display.window_size[0]/2))
             #pygame.mixer.Channel(0).stop()
