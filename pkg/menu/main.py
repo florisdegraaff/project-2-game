@@ -56,18 +56,18 @@ def run():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos 
                 if lvl1.collidepoint(x, y):
-                    return 1
+                    return 0
                 
                 if lvl2.collidepoint(x, y):
-                    return 2
+                    return 1
                 
                 if lvl3.collidepoint(x, y):
-                    return 3
+                    return 2
                 
                 if lvl4.collidepoint(x, y):
-                    return 4
+                    return 3
                 
                 if lvl5.collidepoint(x, y):
-                    return 5
+                    return 4
 
         display.update()
