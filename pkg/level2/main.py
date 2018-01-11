@@ -62,9 +62,9 @@ def run():
     tafelgroup = pygame.sprite.Group()
 
     #Enemy waypoints
-    waypoints = [[620, 100], [715, 75], [735, -455], [1890, -550], [1890, -450], [615, -545]]
+    waypoints = [[620, 100], [735, -455], [1890, -550], [1890, -450], [615, -545]]
     #Enemy2 waypoints
-    waypoints2 = [[1130, 165],[1115, 315], [1015, 315], [1135, -210], [1680, -210], [1680, 165]]
+    waypoints2 = [[1130, 165],[1115, 315], [1135, -210], [1680, -210], [1680, 165]]
     #Enemy3 waypoints
     waypoints3 = [[2175, 290], [1300, 350], [1300, 290], [2175, 350]]
     #Enemy4 waypoints
@@ -110,7 +110,7 @@ def run():
     wallhorizontal14 = HorizontalWall(2040, 30, levelwalls, walls)
 
     #enemy's
-    enemy = Enemy((950, -50), waypoints, enemygroup)
+    enemy = Enemy((620, 50), waypoints, enemygroup)
     enemy2 = Enemy2((1115, 315), waypoints2, enemygroup)
     enemy3 = Enemy3((1900, -100), waypoints3, enemygroup)
     enemy4 = Enemy4((1900, -100), waypoints4, enemygroup)
@@ -215,19 +215,19 @@ def run():
         display.window.blit(player.image, player.rect.topleft+camera)
 
         #update all the groups
-        enemygroup.update()
+        #enemygroup.update()
         all_sprites.update()
         playergroup.update()
         background.update()
         walls.update()
         tafelgroup.update()
 
-        # # collision with enemy
-        # if pygame.sprite.spritecollide(player, enemygroup, False):
-        #     display.window.blit(textsurface,(300, 300))
-        #     display.update()
-        #     time.sleep(3)
-        #     return False
+        # collision with enemy
+        if pygame.sprite.spritecollide(player, enemygroup, False):
+            display.window.blit(textsurface,(300, 300))
+            display.update()
+            time.sleep(3)
+            return False
 
         #collision with table
         if pygame.sprite.spritecollide(player, tafelgroup, False):
@@ -236,16 +236,22 @@ def run():
             time.sleep(5)
             return True
 
-        print(player.rect)
-
             # Load in the fundemental functions in the game
         running = essentials.run_essentials(event)
 
         # Output
 
-        # Update the display to show the changes you made
+        ## Update the display to show the changes you made
+        #counter for player animation
         player.counter(dt)
         player.counter2(dt)
         player.counter3(dt)
         player.counter4(dt)
+
+        # #counter for enemy animation
+        enemy.counter(dt)
+        enemy2.counter(dt)
+        enemy3.counter(dt)
+        enemy4.counter(dt)
+
         display.update()
