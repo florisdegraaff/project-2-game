@@ -6,7 +6,6 @@ import os
 
 from pygame.math import Vector2
 
-
 width = 1280
 height = 720
 
