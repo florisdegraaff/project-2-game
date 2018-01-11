@@ -20,7 +20,7 @@ def run():
     enemies = []
 
     display.set_title('Level 4')
-    timer = essentials.timer(2)
+    timer = essentials.timer(60)
     enemy_spawn_timer = essentials.timer (0)
 
     while running == True:
