@@ -9,9 +9,9 @@ def text_objects(text, font):
     textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
     
-def message_display(text, size, y):
+def message_display(text, size, y, x):
     largeText = pygame.font.Font('freesansbold.ttf',size)
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = ((display.window_size[0]/2), y)
+    TextRect.center = (x, y)
     display.window.blit(TextSurf, TextRect)
     pygame.display.update()

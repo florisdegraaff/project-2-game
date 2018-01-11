@@ -35,18 +35,26 @@ def bombs(bombx, bomby, bombh, bombw):
 
 def lose(cause):
     msg = "Hit " + cause
-    message_display(msg, 35, 300)
+    message_display(msg, 35, 300, (display.window_size[0]/2))
     time.sleep(2)
     
 def tutorial():
+    global pygame
     background.draw(display.window, 1 % background.totalCellCount, 0, 0, CENTER_HANDLE)
-    message_display("continuously press ARROW_UP to fly upwards", 35, 200)
-    time.sleep(1)
-    message_display("Press ARROW_LEFT/ARROW_RIGHT to fly left/right", 35, 300)
-    time.sleep(1)
-    message_display("Dont hit a copter or bomb and survive for one minute to escape", 35, 400)
-    time.sleep(1)
+    message_display("Dodge the copters and bombs for one minute and escape!", 30, 200, 600)
+    message_display("Press continously `Arrow up` to fly up", 30, 230, 454)
+    message_display("Press `Arrow left/right` to fly left/right", 30, 260, 452)
+    message_display("Press any key to continue", 30, 320, 370)
+    while True:
+        #End tutorial when any keys is pressed
+        for event in pygame.event.get():
+            # Load in fundemental functions in the game
+            tutorial = essentials.run_essentials(event)
+            if not tutorial:
+                return False
 
+            if event.type == pygame.KEYDOWN:
+                return True
 def run():
     global running
     global pygame
@@ -159,7 +167,7 @@ def run():
         #display message after 40 seconds
         if (ticks == 2400):
             running = False
-            message_display("The copts are pissed!", 40, 300)
+            message_display("The copts are pissed!", 40, 300, (display.window_size[0]/2))
             #pygame.mixer.Channel(0).stop()
             #pygame.mixer.Channel(2).play(pygame.mixer.Sound('files/sounds/thestruggle.wav'))
             time.sleep(3)
@@ -171,7 +179,7 @@ def run():
             bomb_starx = 2000
             gameWon = True
             if (x > 1280):
-                message_display("You have escaped!", 35, 350)
+                message_display("You have escaped!", 35, 350, (display.window_size[0]/2))
                 if (x > 2500):
                     gameWon = True
                     return True
