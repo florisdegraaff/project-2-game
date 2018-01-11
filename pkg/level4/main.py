@@ -79,4 +79,35 @@ def run():
         display.update()
 
 def tutorial():
-    print ("tutorial")
+    global pygame
+
+    tutorial = True
+    while tutorial:
+
+        display.prepare_update()
+
+        # Input
+        for event in pygame.event.get():
+            # Load in the fundemental functions in the game
+            tutorial = essentials.run_essentials(event)
+            print (tutorial)
+            if not tutorial:
+                return False
+
+            if event.type == pygame.KEYDOWN:
+                return True
+
+        # Output
+        pygame.font.init()
+        myFont = pygame.font.SysFont('Sans Serif', 48)
+
+        textsurface1 = myFont.render('Dodge the guards and bullets', False, (0, 0, 0))
+        textsurface2 = myFont.render('Press `Space` key to jump', False, (0, 0, 0))
+        textsurface3 = myFont.render('Press `Left CTRL` key to crawl', False, (0, 0, 0))
+        textsurface4 = myFont.render('Press any key to continue', False, (0, 0, 0))
+        
+        display.window.blit(textsurface1, (200,200))
+        display.window.blit(textsurface2, (200,230))
+        display.window.blit(textsurface3, (200,260))
+        display.window.blit(textsurface4, (200,320))
+        display.update()
