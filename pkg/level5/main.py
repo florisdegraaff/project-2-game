@@ -35,18 +35,26 @@ def bombs(bombx, bomby, bombh, bombw):
 
 def lose(cause):
     msg = "Hit " + cause
-    message_display(msg, 35, 300)
+    message_display(msg, 35, 300, (display.window_size[0]/2))
     time.sleep(2)
     
 def tutorial():
+    global pygame
     background.draw(display.window, 1 % background.totalCellCount, 0, 0, CENTER_HANDLE)
-    message_display("continuously press ARROW_UP to fly upwards", 35, 200)
-    time.sleep(1)
-    message_display("Press ARROW_LEFT/ARROW_RIGHT to fly left/right", 35, 300)
-    time.sleep(1)
-    message_display("Dont hit a copter or bomb and survive for one minute to escape", 35, 400)
-    time.sleep(1)
+    message_display("Dodge the copters and bombs for one minute and escape!", 30, 200, 600)
+    message_display("Press continously `Arrow up` to fly up", 30, 230, 454)
+    message_display("Press `Arrow left/right` to fly left/right", 30, 260, 452)
+    message_display("Press any key to continue", 30, 320, 370)
+    while True:
+        #End tutorial when any keys is pressed
+        for event in pygame.event.get():
+            # Load in fundemental functions in the game
+            tutorial = essentials.run_essentials(event)
+            if not tutorial:
+                return False
 
+            if event.type == pygame.KEYDOWN:
+                return True
 def run():
     global running
     global pygame
@@ -54,7 +62,7 @@ def run():
     display.set_title("Level 5")
 
     #player configuration
-    x, y = (1500 * 0.1),(900 * 0.4)
+    x, y = (100),(620)
     choppah_width = 245
     choppah_height = 79
     power = 0
@@ -111,14 +119,17 @@ def run():
         #set the new position based on direction change
         power += power_change
         #player y pos remains same, x pos goes forward on game win
-        if (ticks > 200):
+        if (ticks > 3000):
             power = 0
             x_change = 5
-        y += power
-        x += x_change
-        bomb_starty -= bomb_speed
-        enemy_startx -= enemy_speed
-            
+        if (ticks < 120):
+            x += 0.6
+            y -= 2.5
+            y += power
+            x += x_change
+            bomb_starty -= bomb_speed
+            enemy_startx -= enemy_speed
+
         if (bomb_starty > display_height + 100):
             bomb_startx = random.randrange(0, display_width - 100)
             bomb_starty = 0
@@ -145,11 +156,11 @@ def run():
         enemy.draw(display.window, index % enemy.totalCellCount, enemy_startx, enemy_starty, CENTER_HANDLE)
             
         #after 20 seconds enemy copters speedup
-        if (ticks > 1200 and ticks <= 2400):
+        if (ticks > 1000 and ticks <= 2000):
             enemy_speed = 12
 
         #after 40 seconds 
-        if (ticks > 2400):
+        if (ticks > 2000):
             enemy_speed = 13
             #when player collides with bomb, restart level
             bombs(bomb_startx, bomb_starty, bomb_height, bomb_width)
@@ -157,9 +168,9 @@ def run():
                 lose("by bomb")
                 return False
         #display message after 40 seconds
-        if (ticks == 2400):
+        if (ticks == 2000):
             running = False
-            message_display("The copts are pissed!", 40, 300)
+            message_display("The copts are pissed!", 40, 300, (display.window_size[0]/2))
             #pygame.mixer.Channel(0).stop()
             #pygame.mixer.Channel(2).play(pygame.mixer.Sound('files/sounds/thestruggle.wav'))
             time.sleep(3)
@@ -171,7 +182,7 @@ def run():
             bomb_starx = 2000
             gameWon = True
             if (x > 1280):
-                message_display("You have escaped!", 35, 350)
+                message_display("You have escaped!", 35, 350, (display.window_size[0]/2))
                 if (x > 2500):
                     gameWon = True
                     return True
