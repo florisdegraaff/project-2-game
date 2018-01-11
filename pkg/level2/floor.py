@@ -10,7 +10,7 @@ class Floor(pygame.sprite.Sprite):
 
     def __init__(self, x, y, *groups):
         super(Floor, self).__init__(*groups)
-        self.image = pygame.image.load(os.path.join("pkg/level2/images/floor.png"))
+        self.image = pygame.image.load(os.path.join("pkg/level2/images/floor.png")).convert_alpha()
         print (self.image)
         self.rect = self.image.get_rect(topleft=(x, y))
         self.rect.x = x

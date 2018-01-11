@@ -10,6 +10,7 @@ from pygame.math import Vector2
 from .horizontalwall import HorizontalWall
 from .verticalwall import VerticalWall
 import time
+from itertools import cycle
 
 running = True
 pygame = essentials.pygame
@@ -104,8 +105,11 @@ def run():
 
     display.set_title('Level 2')
 
-    while running:
+    #animated sprite
+    clock = pygame.time.Clock()
+    dt = clock.tick(60)
 
+    while running:
         # Input
         for event in pygame.event.get():
             running = essentials.run_essentials(event)
@@ -204,6 +208,10 @@ def run():
         # Output
 
         # Update the display to show the changes you made
+        player.counter(dt)
+        player.counter2(dt)
+        player.counter3(dt)
+        player.counter4(dt)
         display.update()
 
 def tutorial():

@@ -14,7 +14,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def __init__(self, pos, waypoints, *groups):
         super(Enemy, self).__init__(*groups)
-        self.image = pygame.image.load(os.path.join("pkg/level2/images/enemy.png"))
+        self.image = pygame.image.load(os.path.join("pkg/level2/images/enemy.png")).convert_alpha()
         self.image = pygame.transform.scale(self.image, (int(50), int(50)))
         self.rect = self.image.get_rect(center=pos)
         self.vel = Vector2(0,0)
