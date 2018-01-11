@@ -2,16 +2,13 @@ import pkg.foundation.essentials as essentials
 
 pygame = essentials.pygame
 
-import pygame
-
 import os
 
-class Floor(pygame.sprite.Sprite):
+class Tafel(pygame.sprite.Sprite):
 
     def __init__(self, x, y, *groups):
-        super(Floor, self).__init__(*groups)
-        self.image = pygame.image.load(os.path.join("pkg/level2/images/floor.png")).convert_alpha()
+        super(Tafel, self).__init__(*groups)
+        self.image = pygame.image.load(os.path.join("pkg/level2/images/table.png")).convert_alpha()
         self.rect = self.image.get_rect(topleft=(x, y))
         self.rect.x = x
         self.rect.y = y
-#test

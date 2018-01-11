@@ -1,7 +1,9 @@
 import pkg.foundation.display as display
 import pkg.foundation.essentials as essentials
-from .enemy2 import Enemy2
 from .enemy import Enemy
+from .enemy2 import Enemy2
+from .enemy3 import Enemy3
+from .enemy4 import Enemy4
 from .player import Player
 from .floor import Floor
 from .sidewall import SideWall
@@ -11,6 +13,7 @@ from .horizontalwall import HorizontalWall
 from .verticalwall import VerticalWall
 import time
 from itertools import cycle
+from .tafel import Tafel
 
 running = True
 pygame = essentials.pygame
@@ -31,9 +34,13 @@ pygame.font.init()
 myfont = pygame.font.SysFont('Comic Sans MS', 100)
 textsurface = myfont.render('You Got Caught', False, (0, 255, 0))
 
+#tutorial text
+myfont = pygame.font.SysFont('Comic Sans MS', 100)
+tutorialtext = myfont.render('Tutorial', False, (0, 255, 0))
+
 def tutorial():
     tutorial_background = pygame.draw.rect(display.window, (0,0,0), (0,0,1280,720))
-    display.window.blit(textsurface,(300, 300))
+    display.window.blit(tutorialtext,(300, 300))
     display.update()
     time.sleep(3)
 
@@ -52,11 +59,16 @@ def run():
     walls = pygame.sprite.Group()
     levelwalls = pygame.sprite.Group()
     enemygroup = pygame.sprite.Group()
+    tafelgroup = pygame.sprite.Group()
 
     #Enemy waypoints
-    waypoints = [[665, 65], [620, -540], [735, -540], [300, 300]]
+    waypoints = [[620, 100], [715, 75], [735, -455], [1890, -550], [1890, -450], [615, -545]]
     #Enemy2 waypoints
-    waypoints2 = [[1150, 160],[1215, -280], [1630, -280], [1935, -75], [1800, 160]]
+    waypoints2 = [[1130, 165],[1115, 315], [1015, 315], [1135, -210], [1680, -210], [1680, 165]]
+    #Enemy3 waypoints
+    waypoints3 = [[2175, 290], [1300, 350], [1300, 290], [2175, 350]]
+    #Enemy4 waypoints
+    waypoints4 = [[1800, 0],[1975, -125], [2300, -130], [2300, 120], [1970, 120]]
     #player position
     player = Player(((width / 2), (height / 2)))
 
@@ -99,10 +111,15 @@ def run():
 
     #enemy's
     enemy = Enemy((950, -50), waypoints, enemygroup)
-    enemy2 = Enemy2((1900, -100), waypoints2, enemygroup)
+    enemy2 = Enemy2((1115, 315), waypoints2, enemygroup)
+    enemy3 = Enemy3((1900, -100), waypoints3, enemygroup)
+    enemy4 = Enemy4((1900, -100), waypoints4, enemygroup)
 
     #the floor
     floor = Floor(540, -620, background)
+
+    #tafel
+    tafel = Tafel(2300, 300, tafelgroup)
 
     #camera
     camera = Vector2(0, 0)
@@ -153,6 +170,7 @@ def run():
         playergroup.update()
         background.update()
         walls.update()
+        tafelgroup.update()
 
         ##player collision with walls
         # move player horizontal
@@ -180,6 +198,7 @@ def run():
         #draw background
         for sprite in background:
             display.window.blit(sprite.image, sprite.rect.topleft+camera)
+        #draw walls in level
         for sprite in levelwalls:
             display.window.blit(sprite.image, sprite.rect.topleft+camera)
         # draw player and walls
@@ -188,7 +207,12 @@ def run():
         #draw enemy's
         for sprite in enemygroup:
             display.window.blit(sprite.image, sprite.rect.topleft+camera)
-            display.window.blit(player.image, player.rect.topleft+camera)
+
+        #draw tafel
+        for sprite in tafelgroup:
+            display.window.blit(sprite.image, sprite.rect.topleft+camera)
+        #draw player
+        display.window.blit(player.image, player.rect.topleft+camera)
 
         #update all the groups
         enemygroup.update()
@@ -196,13 +220,21 @@ def run():
         playergroup.update()
         background.update()
         walls.update()
+        tafelgroup.update()
 
-        #collision with enemy
-        if pygame.sprite.spritecollide(player, enemygroup, False):
+        # # collision with enemy
+        # if pygame.sprite.spritecollide(player, enemygroup, False):
+        #     display.window.blit(textsurface,(300, 300))
+        #     display.update()
+        #     time.sleep(3)
+        #     return False
+
+        #collision with table
+        if pygame.sprite.spritecollide(player, tafelgroup, False):
             display.window.blit(textsurface,(300, 300))
             display.update()
-            time.sleep(3)
-            return False
+            time.sleep(5)
+            return True
 
         print(player.rect)
 
