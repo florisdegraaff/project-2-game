@@ -37,7 +37,7 @@ def lose(cause):
     msg = "Hit " + cause
     message_display(msg, 35, 300, (display.window_size[0]/2))
     time.sleep(2)
-    
+
 def tutorial():
     global pygame
     background.draw(display.window, 1 % background.totalCellCount, 0, 0, CENTER_HANDLE)
@@ -69,7 +69,7 @@ def run():
     power_change = 0
     x_change = 0
     y_change = 0
-    
+
     #enemy copter configuration
     enemy_turbo = 2
     enemy_startx = 1800
@@ -99,12 +99,12 @@ def run():
 
     #game loop
     while running == True:
-        
+
         #catch all pressed keys
         for event in pygame.event.get():
             running = essentials.run_essentials(event)
-            if event.type == pygame.QUIT:
-                running = False
+            if not running:
+                return True
 
             #direction change based on pressed key
             if event.type == pygame.KEYDOWN:
@@ -115,7 +115,7 @@ def run():
                     x_change = -5
                 if event.key == pygame.K_RIGHT:
                     x_change = 5
-                    
+
         #set the new position based on direction change
         power += power_change
         #player y pos remains same, x pos goes forward on game win
@@ -137,29 +137,29 @@ def run():
             enemy_starty -= 1.2
         if (enemy_starty < y):
             enemy_starty += 1.2
-        
+
         if enemy_startx < -250:
             enemy_starty = random.randrange(0, display_height - 100)
             enemy_startx = 1500
 
-            
+
         #drawing rectangles for entities with collision
         bombRect = pygame.draw.rect(display.window, (0,0,0), (bomb_startx,bomb_starty,bomb_width,bomb_height))
         choepahRect = pygame.draw.rect(display.window, (0,0,0), (x,y,choppah_width,choppah_height))
         enemyRect = pygame.draw.rect(display.window, (0,0,0), (enemy_startx,enemy_starty,enemy_width,enemy_height))
-        
+
         #draw the background over the rectangles
         background.draw(display.window, index % background.totalCellCount, 0, 0, CENTER_HANDLE)
-        
+
         #draw sprites/images on the position of the rectangles
         choepah.draw(display.window, index % choepah.totalCellCount, x, y, CENTER_HANDLE)
         enemy.draw(display.window, index % enemy.totalCellCount, enemy_startx, enemy_starty, CENTER_HANDLE)
-            
+
         #after 20 seconds enemy copters speedup
         if (ticks > 1000 and ticks <= 2000):
             enemy_speed = 12
 
-        #after 40 seconds 
+        #after 40 seconds
         if (ticks > 2000):
             enemy_speed = 13
             #when player collides with bomb, restart level
@@ -186,13 +186,13 @@ def run():
                 if (x > 2500):
                     gameWon = True
                     return True
-                
-                   
+
+
         #when a player collides with border, restart level
         if (x > display_width - choppah_width or x < 0 or y < 0 or y+choppah_height > display_height) and not gameWon:
             lose("the border")
             return False
-        
+
         #when player collides with enemy copter, restart level
         if choepahRect.colliderect(enemyRect):
             lose("by copter")
