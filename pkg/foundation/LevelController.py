@@ -25,16 +25,16 @@ class LevelController:
     def load_level (self, level = 0):
         global current_level
         current_level = level
-        self.levels[level].tutorial()
-        completed = False
-        while not completed:
-            completed = self.levels[level].run()
-        current_level = current_level + 1
-        if essentials.running:
-            if current_level <= 4:
-                self.load_level(current_level)
-            else:
-                menu.run()
+        if self.levels[level].tutorial():
+            completed = False
+            while not completed:
+                completed = self.levels[level].run()
+            current_level = current_level + 1
+            if essentials.running:
+                if current_level <= 4:
+                    self.load_level(current_level)
+                else:
+                    menu.run()
 
     def start_game (self):
         level = menu.run()
