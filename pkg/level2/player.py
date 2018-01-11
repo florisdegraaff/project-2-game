@@ -16,25 +16,25 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         #for moving right animation
         images = [pygame.image.load("{}.png".format(name)).convert_alpha()
-                  for name in ("pkg/level2/images/player", "pkg/level2/images/enemy")]
+                  for name in ("pkg/level2/images/right1", "pkg/level2/images/right2", "pkg/level2/images/right1", "pkg/level2/images/right3", "pkg/level2/images/right1")]
         self.images = cycle(images)
         self.image = next(self.images)
         #timer for animated sprite
         self.timer = 0
-        self.frame_duration = 250 #about 15 frames at 60 fps
+        self.frame_duration = 300 #about 15 frames at 60 fps
         #for moving left animation
         images2 = [pygame.image.load("{}.png".format(name)).convert_alpha()
-                  for name in ("pkg/level2/images/left1", "pkg/level2/images/left2", "pkg/level2/images/left1", "pkg/level2/images/left3")]
+                  for name in ("pkg/level2/images/left1", "pkg/level2/images/left2", "pkg/level2/images/left1", "pkg/level2/images/left3", "pkg/level2/images/left1")]
         self.images2 = cycle(images2)
         self.image = next(self.images2)
         #for moving up animation
         images3 = [pygame.image.load("{}.png".format(name)).convert_alpha()
-                  for name in ("pkg/level2/images/player", "pkg/level2/images/wall")]
+                  for name in ("pkg/level2/images/up1", "pkg/level2/images/up2", "pkg/level2/images/up1", "pkg/level2/images/up3", "pkg/level2/images/up1")]
         self.images3 = cycle(images3)
         self.image = next(self.images3)
         #for moving down animation
         images4 = [pygame.image.load("{}.png".format(name)).convert_alpha()
-                  for name in ("pkg/level2/images/player", "pkg/level2/images/wall")]
+                  for name in ("pkg/level2/images/down1", "pkg/level2/images/down2", "pkg/level2/images/down1", "pkg/level2/images/down3", "pkg/level2/images/down1")]
         self.images4 = cycle(images4)
         self.image = next(self.images4)
 

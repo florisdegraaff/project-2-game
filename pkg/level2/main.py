@@ -25,10 +25,17 @@ y3 = 150
 x = 0
 y = 0
 
+
 #settings text shown when hit by enemy
 pygame.font.init()
 myfont = pygame.font.SysFont('Comic Sans MS', 100)
-textsurface = myfont.render('You Got Caught', False, (0, 0, 0))
+textsurface = myfont.render('You Got Caught', False, (0, 255, 0))
+
+def tutorial():
+    tutorial_background = pygame.draw.rect(display.window, (0,0,0), (0,0,1280,720))
+    display.window.blit(textsurface,(300, 300))
+    display.update()
+    time.sleep(3)
 
 def run():
     global running
@@ -37,8 +44,6 @@ def run():
     timer = essentials.timer(3)
     if timer.check_timer:
         print ("timer is done")
-
-    screen = pygame.display.set_mode((1280, 720))
 
     #groups
     playergroup = pygame.sprite.Group()
@@ -54,7 +59,6 @@ def run():
     waypoints2 = [[1150, 160],[1215, -280], [1630, -280], [1935, -75], [1800, 160]]
     #player position
     player = Player(((width / 2), (height / 2)))
-
 
     #side, top and bottom walls
     walltop = TopAndBottomWall(540, -620, all_sprites, walls)
@@ -171,20 +175,20 @@ def run():
 
         camera -= player.vel
 
-        screen.fill((0, 0, 0))
+        display.window.fill((0, 0, 0))
 
         #draw background
         for sprite in background:
-            screen.blit(sprite.image, sprite.rect.topleft+camera)
+            display.window.blit(sprite.image, sprite.rect.topleft+camera)
         for sprite in levelwalls:
-            screen.blit(sprite.image, sprite.rect.topleft+camera)
+            display.window.blit(sprite.image, sprite.rect.topleft+camera)
         # draw player and walls
         for sprite in all_sprites:
-            screen.blit(sprite.image, sprite.rect.topleft+camera)
+            display.window.blit(sprite.image, sprite.rect.topleft+camera)
         #draw enemy's
         for sprite in enemygroup:
-            screen.blit(sprite.image, sprite.rect.topleft+camera)
-            screen.blit(player.image, player.rect.topleft+camera)
+            display.window.blit(sprite.image, sprite.rect.topleft+camera)
+            display.window.blit(player.image, player.rect.topleft+camera)
 
         #update all the groups
         enemygroup.update()
@@ -195,7 +199,7 @@ def run():
 
         #collision with enemy
         if pygame.sprite.spritecollide(player, enemygroup, False):
-            screen.blit(textsurface,(300, 300))
+            display.window.blit(textsurface,(300, 300))
             display.update()
             time.sleep(3)
             return False
@@ -213,6 +217,3 @@ def run():
         player.counter3(dt)
         player.counter4(dt)
         display.update()
-
-def tutorial():
-    print ("tutorial")
