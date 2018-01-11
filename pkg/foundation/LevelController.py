@@ -1,8 +1,6 @@
 import pkg.foundation.display as display
 import pkg.foundation.essentials as essentials
 
-display.prepare_screen()
-
 import pkg.menu.main as menu
 import pkg.level1.main as level1
 import pkg.level2.main as level2
@@ -15,6 +13,7 @@ class LevelController:
     current_level = 0
 
     levels = [
+        menu,
         level1,
         level2,
         level3,
@@ -23,14 +22,21 @@ class LevelController:
     ]
 
     def load_level (self, level = 0):
-        self.current_level = level
+        global current_level
+        current_level = level
+        if (current_level is not 0):
+            self.levels[level].tutorial()
         completed = False
-        if completed == False:
-            self.levels[level].turtorial()
         while not completed:
             completed = self.levels[level].run()
-        self.current_level = self.current_level + 1
-        self.load_level(self.current_level)            
+        current_level = current_level + 1
+        if essentials.running:
+            if current_level <= 5:
+                self.load_level(current_level)
+            else:
+                current_level = 0
+                self.load_level(current_level)
+                
 
     def start_game (self):
         level = menu.run()

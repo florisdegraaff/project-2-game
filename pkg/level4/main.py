@@ -47,7 +47,6 @@ def run():
             running = not timer.check_timer()
 
         if enemy_spawn_timer.check_timer():
-            print ("hello")
             enemy_spawn_timer = essentials.timer(randint(1,3))
             if randint (0,1) == 0:
                 enemies.append(Guard())
@@ -78,3 +77,6 @@ def run():
 
         # Update the display to show the changes you made
         display.update()
+
+def tutorial():
+    print ("tutorial")

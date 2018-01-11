@@ -1,6 +1,8 @@
 from pkg.foundation import essentials
 from pkg.foundation import display
 
+display.prepare_screen()
+
 import pkg.level1.main as level1
 import pkg.level2.main as level2
 import pkg.level3.main as level3
@@ -52,16 +54,20 @@ def run():
             if not running:
                 return True
             if event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = event.pos
+                x, y = event.pos 
                 if lvl1.collidepoint(x, y):
-                    return 0
-                if lvl2.collidepoint(x, y):
                     return 1
-                if lvl3.collidepoint(x, y):
+                
+                if lvl2.collidepoint(x, y):
                     return 2
-                if lvl4.collidepoint(x, y):
+                
+                if lvl3.collidepoint(x, y):
                     return 3
-                if lvl5.collidepoint(x, y):
+                
+                if lvl4.collidepoint(x, y):
                     return 4
+                
+                if lvl5.collidepoint(x, y):
+                    return 5
 
         display.update()
