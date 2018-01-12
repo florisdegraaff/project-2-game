@@ -21,7 +21,7 @@ class Enemy(pygame.sprite.Sprite):
         self.image = next(self.images)
         #timer for animated sprite
         self.timer = 0
-        self.frame_duration = 250 #250 = about 15 frames at 60 fps
+        self.frame_duration = 100 #250 = about 15 frames at 60 fps
         #for moving left animation
         images2 = [pygame.image.load("{}.png".format(name)).convert_alpha()
                   for name in ("pkg/level2/images/enemyleft1","pkg/level2/images/enemyleft2", "pkg/level2/images/enemyleft1", "pkg/level2/images/enemyleft3")]

@@ -14,6 +14,8 @@ from .verticalwall import VerticalWall
 import time
 from itertools import cycle
 from .tafel import Tafel
+from .message_display import *
+import pygame.mixer
 
 running = True
 pygame = essentials.pygame
@@ -27,22 +29,35 @@ x3 = 1100
 y3 = 150
 x = 0
 y = 0
+#chopper image
+gettothechopper = pygame.image.load("pkg/level2/images/gettothechopper.png").convert_alpha()
+
+#arnold image
+busted = pygame.image.load("pkg/level2/images/busted.png").convert_alpha()
+
+#level sound
+pygame.mixer.init(44100, -16,2,2048)
+pygame.mixer.music.load("pkg/level2/sounds/elevator.mp3")
 
 
-#settings text shown when hit by enemy
-pygame.font.init()
-myfont = pygame.font.SysFont('Comic Sans MS', 100)
-textsurface = myfont.render('You Got Caught', False, (0, 255, 0))
-
-#tutorial text
-myfont = pygame.font.SysFont('Comic Sans MS', 100)
-tutorialtext = myfont.render('Tutorial', False, (0, 255, 0))
 
 def tutorial():
-    tutorial_background = pygame.draw.rect(display.window, (0,0,0), (0,0,1280,720))
-    display.window.blit(tutorialtext,(300, 300))
-    display.update()
-    time.sleep(3)
+    global pygame
+    display.window.fill((107, 115, 122))
+    message_display("Find the phone to connect Arnold.", 30, 200, 600)
+    message_display("Dont let the guards get you.", 30, 230, 600)
+    message_display("Press WASD-Keys to move", 30, 260, 600)
+    message_display("Press any key to continue", 30, 320, 600)
+    while True:
+        #End tutorial when any keys is pressed
+        for event in pygame.event.get():
+            # Load in fundemental functions in the game
+            tutorial = essentials.run_essentials(event)
+            if not tutorial:
+                return False
+
+            if event.type == pygame.KEYDOWN:
+                return True
 
 def run():
     global running
@@ -129,6 +144,8 @@ def run():
     #animated sprite
     clock = pygame.time.Clock()
     dt = clock.tick(60)
+    #play level music
+    pygame.mixer.music.play(-1)
 
     while running:
         # Input
@@ -215,7 +232,6 @@ def run():
         display.window.blit(player.image, player.rect.topleft+camera)
 
         #update all the groups
-        #enemygroup.update()
         all_sprites.update()
         playergroup.update()
         background.update()
@@ -224,16 +240,22 @@ def run():
 
         # collision with enemy
         if pygame.sprite.spritecollide(player, enemygroup, False):
-            display.window.blit(textsurface,(300, 300))
+            #show busted
+            display.window.blit(busted, [400, 150])
             display.update()
             time.sleep(3)
             return False
 
         #collision with table
         if pygame.sprite.spritecollide(player, tafelgroup, False):
-            display.window.blit(textsurface,(300, 300))
+            #show arnold face
+            display.window.blit(gettothechopper, [0, 0])
+            #load arnold sound
+            pygame.mixer.music.load("pkg/level2/sounds/gettothechopper.mp3")
+            #play arnold sound
+            pygame.mixer.music.play(0)
             display.update()
-            time.sleep(5)
+            time.sleep(6)
             return True
 
             # Load in the fundemental functions in the game
@@ -253,5 +275,6 @@ def run():
         enemy2.counter(dt)
         enemy3.counter(dt)
         enemy4.counter(dt)
+        enemygroup.update()
 
         display.update()
