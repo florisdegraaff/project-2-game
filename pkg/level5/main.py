@@ -34,12 +34,11 @@ bomb = pygame.image.load('files/images/bomb.png')
 
 def bombs(bombx, bomby, bombh, bombw):
     display.window.blit(bomb, [bombx, bomby, bombh, bombw])
-
+        
 def lose(cause):
     allowInput = False
     msg = "Hit " + cause
     message_display(msg, 35, 300, (display.window_size[0]/2))
-    print(cause)
     time.sleep(2)
     allowInput = True
     
@@ -47,7 +46,7 @@ def tutorial():
     global pygame
     background.draw(display.window, 1 % background.totalCellCount, 0, 0, CENTER_HANDLE)
     message_display("Dodge the copters and bombs for one minute and escape!", 30, 200, 600)
-    message_display("Press continously `Arrow up` to fly up", 30, 230, 454)
+    message_display("Spam `Arrow up` to fly up", 30, 230, 366)
     message_display("Press `Arrow left/right` to fly left/right", 30, 260, 452)
     message_display("Press any key to continue", 30, 320, 370)
     while True:
@@ -60,6 +59,7 @@ def tutorial():
 
             if event.type == pygame.KEYDOWN:
                 return True
+            
 def run():
     global running
     global pygame
@@ -98,6 +98,7 @@ def run():
     allowInput = True
     ticks = 0
     index = 0
+    cheatsEnabled = False
 
     #music/sounds (optional)
     #pygame.mixer.Channel(0).play(pygame.mixer.Sound('files/sounds/victory.wav'))
@@ -113,7 +114,7 @@ def run():
                 running = False
 
             #direction change based on pressed key
-            if event.type == pygame.KEYDOWN and allowInput:
+            if event.type == pygame.KEYDOWN and allowInput and ticks > 120:
                 if event.key == pygame.K_UP:
                     power_change = 0.25
                     power = -5
@@ -121,7 +122,12 @@ def run():
                     x_change = -5
                 if event.key == pygame.K_RIGHT:
                     x_change = 5
-                    
+                if event.key == pygame.K_x:
+                    if (cheatsEnabled):
+                        cheatsEnabled = False
+                    else:
+                        cheatsEnabled = True
+        
         #set the new position based on direction change
         power += power_change
         #player y pos remains same, x pos goes forward on game win
@@ -170,7 +176,7 @@ def run():
             enemy_speed = 13
             #when player collides with bomb, restart level
             bombs(bomb_startx, bomb_starty, bomb_height, bomb_width)
-            if choepahRect.colliderect(bombRect):
+            if choepahRect.colliderect(bombRect) and not cheatsEnabled:
                 lose("by bomb")
                 return False
             
@@ -194,12 +200,12 @@ def run():
                 
                    
         #when a player collides with border, restart level
-        if (x > display_width - choppah_width or x < 0 or y < 0 or y+choppah_height > display_height) and not gameWon:
+        if (x > display_width - choppah_width or x < 0 or y < 0 or y+choppah_height > display_height) and not gameWon and not cheatsEnabled:
             lose("the border")
             return False
         
         #when player collides with enemy copter, restart level
-        if choepahRect.colliderect(enemyRect):
+        if choepahRect.colliderect(enemyRect) and not cheatsEnabled:
             lose("by copter")
             return False
 
