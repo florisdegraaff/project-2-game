@@ -142,7 +142,6 @@ def run():
     clock = pygame.time.Clock()
     dt = clock.tick(60)
 
-
     while running:
         # Input
         for event in pygame.event.get():
@@ -173,10 +172,6 @@ def run():
                     player.vel.y = 0
                 elif event.key == pygame.K_s:
                     player.vel.y = 0
-
-        #play level music
-
-        #level sound
 
         #update all the groups
         enemygroup.update()
