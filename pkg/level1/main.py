@@ -31,14 +31,14 @@ interaction_mark2 = None
 interaction_mark3 = None
 interaction_mark4 = None
 key_obtained = None
+visible_speech_balloon = None
+highlighted_answer = None
 
 bed_scenario = None
 toilet_scenario = None
 mob_scenario = None
 
 reader = None
-
-visible_speech_balloon = False
 
 def run ():
     global running
@@ -55,6 +55,8 @@ def run ():
     global bed_scenario
     global toilet_scenario
     global mob_scenario
+    global player
+    global highlighted_answer
 
     display.set_title('Level 1')
 
@@ -87,15 +89,17 @@ def run ():
                     if visible_speech_balloon:
                         if speech_balloon_object.scenario == 1: # I don't have to go...
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 2 and highlighted_answer == 4: # Do you want to play a game?;Answer 3 questions...;and I'll hand over the key --> Yes
                             bed_scenario = 3
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 2 and highlighted_answer == 5: # Do you want to play a game?;Answer 3 questions...;and I'll hand over the key --> No
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 3: # Here is my first question:;The person who knows he uses;it, doesn't know he uses it.;What is it?
                             bed_scenario = 4
@@ -103,27 +107,28 @@ def run ():
                             highlighted_answer = 1
                             highlighted_answer_minimum_boundary = 1
                             highlighted_answer_maximum_boundary = 4
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 4 and highlighted_answer != 4: # Insurance;Necktie;Sugar;Coffin
                             bed_scenario = 5
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 4 and highlighted_answer == 4: # Insurance;Necktie;Sugar;Coffin
                             bed_scenario = 6
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 5: # WRONG!;Get used to being here,;cause you're going to be;here for a while...
                             bed_scenario = 3
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 6: # That's correct.;Here's my next question:
                             bed_scenario = 7
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 7: # Have you ever heard of a;dyslexic Satanist?
                             bed_scenario = 8
@@ -131,48 +136,51 @@ def run ():
                             highlighted_answer = 1
                             highlighted_answer_minimum_boundary = 1
                             highlighted_answer_maximum_boundary = 4
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 8 and highlighted_answer != 2: # They prey to Christ;He sold his soul to Santa;There are none;No
                             bed_scenario = 9
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 8 and highlighted_answer == 2: # They prey to Christ;He sold his soul to Santa;There are none;No
                             bed_scenario = 10
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 9: # You're wrong!;I guess you're not so smart;...
                             bed_scenario = 7
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 10: #  Okay. For my final game,;I want you to insult the;other inmate's mother.
                             bed_scenario = 11
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 11: # We're gonna torture him;with the infamous your momma jokes.
                             bed_scenario = 12
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 12: # Unfortunately for you,;I only know the setups,;you're gonna have to come;up with the punchlines
                             bed_scenario = 13
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 13: # Go talk to the other inmate.
                             bed_scenario = 10
                             mob_scenario = 15
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 14: # Go away.;I have nothing to say.
                             mob_scenario = 14
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 15: # Okay, here goes nothing... *
                             mob_scenario = 16
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 16: # HEY YOU!;YO' MOMMA'S SO FAT...
                             mob_scenario = 17
@@ -180,27 +188,28 @@ def run ():
                             highlighted_answer = 1
                             highlighted_answer_minimum_boundary = 1
                             highlighted_answer_maximum_boundary = 3
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 17 and highlighted_answer != 2: # ...SHE SHOWED UP EARLY;FOR HER OWN FUNERAL!;...SHE HAS MORE FOLDS,;THAN AN ORIGAMI ACCORDEON!;...IF SHE FELL IN NUCLEAR WASTE,;NO ONE WOULD NOTICE!
                             mob_scenario = 18
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 17 and highlighted_answer == 2: # ...SHE SHOWED UP EARLY;FOR HER OWN FUNERAL!;...SHE HAS MORE FOLDS,;THAN AN ORIGAMI ACCORDEON!;...IF SHE FELL IN NUCLEAR WASTE,;NO ONE WOULD NOTICE!
                             mob_scenario = 19
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 18: # Stop talking trash!;You suck at this!
                             mob_scenario = 15
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 19: # Not a word about my mother!;She's a saint.
                             mob_scenario = 20
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 20: # YO' MOMMA'S SO RADIANT...
                             mob_scenario = 21
@@ -208,27 +217,28 @@ def run ():
                             highlighted_answer = 1
                             highlighted_answer_minimum_boundary = 1
                             highlighted_answer_maximum_boundary = 3
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 21 and highlighted_answer != 1: # ...IF SHE FELL IN NUCLEAR WASTE,;NO ONE WOULD NOTICE!;...SHE BRINGS COUPONS TO;THE PENNY ARCADE!;...SHE SHOWED UP EARLY;FOR HER OWN FUNERAL!
                             mob_scenario = 22
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 21 and highlighted_answer == 1: # ...IF SHE FELL IN NUCLEAR WASTE,;NO ONE WOULD NOTICE!;...SHE BRINGS COUPONS TO;THE PENNY ARCADE!;...SHE SHOWED UP EARLY;FOR HER OWN FUNERAL!
                             mob_scenario = 23
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 22: # You ain't hurtin nobody,;you little bitch!
                             mob_scenario = 15
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 23: # Ahhh, it hurts...;IT HURTS!
                             mob_scenario = 24
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 24: # YO' MOMMA'S SO PUNCTUAL...
                             mob_scenario = 25
@@ -236,68 +246,73 @@ def run ():
                             highlighted_answer = 1
                             highlighted_answer_minimum_boundary = 1
                             highlighted_answer_maximum_boundary = 3
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 25 and highlighted_answer != 2: # ...SHE BRINGS COUPONS TO;THE PENNY ARCADE!;...SHE SHOWED UP EARLY;FOR HER OWN FUNERAL!;...THE ONLY TIME SHE'S LOW;IS AT A LIMBO CONTEST!
                             mob_scenario = 26
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 25 and highlighted_answer == 2: # ...SHE BRINGS COUPONS TO;THE PENNY ARCADE!;...SHE SHOWED UP EARLY;FOR HER OWN FUNERAL!;...THE ONLY TIME SHE'S LOW;IS AT A LIMBO CONTEST!
                             mob_scenario = 27
                             multiple_choice_answers = False
                             highlighted_answer = 0
-                            speech_balloon_object.choose_scenario(self, reader, mob_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, mob_scenario)
 
                         elif speech_balloon_object.scenario == 26: # You had your chance,;now FUCK OFF!
                             mob_scenario = 15
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 27: # Enough, enough!; I'm suffocating...;sob.. sob... *
                             mob_scenario = 28
                             bed_scenario = 30
-                            speech_balloon_object.choose_scenario(self, reader, 29)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, 29)
 
                         elif speech_balloon_object.scenario == 28: # I'm done talking to you;Leave me alone...
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 29: # Now to claim the key;and get the fuck outta here! *
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 30: # Man...;I had the time of my life!!;Didn't know you had it in ya!
                             bed_scenario = 31
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 31: # Unfortunately for you,;I don't have the key on me,;but I'm sure that you little;POTTY mouth;will know where to find it.
                             bed_scenario = 30
                             toilet_scenario = 32
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 32: # GROSS...;;* key obtained *
                             toilet_scenario = 33
                             bed_scenario = 34
                             key_obtained = True
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 33: # I already got the key...
                             visible_speech_balloon = False
+                            player.can_walk = True
 
                         elif speech_balloon_object.scenario == 34: # Drop by anytime pal.
                             bed_scenario = 35
-                            speech_balloon_object.choose_scenario(self, reader, bed_scenario)
+                            speech_balloon_object.choose_scenario(visible_speech_balloon, reader, bed_scenario)
 
                         elif speech_balloon_object.scenario == 35: # Wouldn't count on it "pal" *
                             bed_scenario = 34
                             visible_speech_balloon = False
+                            player.can_walk = True
 
     # Output
         pygame.mixer.init()
         pygame.font.init()
         font = pygame.font.Font(FONT, 19)
         font2 = pygame.font.Font(FONT, 13)
-
-        all_sprites.update()
 
         if player.speedx or player.speedy > 0:
             all_sprites.remove(interaction_mark1, interaction_mark2, interaction_mark3, interaction_mark4)
@@ -307,6 +322,8 @@ def run ():
         if player.rect.x >= 930 and player.rect.y <= 222:
 
             if player.keys[pygame.K_SPACE]:
+                player.can_walk = False
+                visible_speech_balloon = True
                 if bed_scenario == 2:
                     multiple_choice_answers = True
                     highlighted_answer = 4
@@ -317,12 +334,15 @@ def run ():
         # for interaction with the toilet
         if (player.rect.x >= 640 and player.rect.x <= 772) and player.rect.y <= 150:
             if player.keys[pygame.K_SPACE]:
-
+                visible_speech_balloon = True
+                player.can_walk = False
                 speech_balloon_object.choose_scenario(visible_speech_balloon, reader, toilet_scenario)
 
         # for interaction with the bars of the player's cell
         if player.rect.x == 622:
             if player.keys[pygame.K_SPACE]:
+                visible_speech_balloon = True
+                player.can_walk = False
                 if key_obtained == True:
                     all_sprites.remove(bars)
                     bars.remove(jailDoor)
@@ -355,17 +375,14 @@ def run ():
             player.rect.y = player.rect.y - player.speedy
 
             if key_obtained == False:
-
-
                 if player.speedx == 0:
                     all_sprites.add(interaction_mark1)
-
                 if player.speedy == 0:
                     all_sprites.add(interaction_mark1)
                     if player.keys[pygame.K_SPACE]:
-                        #key_obtained = False
+                        key_obtained = False
 
-            if key_obtained == True:
+            else:
                 all_sprites.remove(bars)
                 bars.remove(jailDoor)
 
@@ -398,10 +415,12 @@ def run ():
 
         if visible_speech_balloon:
             all_sprites.add(speech_balloon)
-            Text(speech_balloon_object, font, reader, highlighted_answer)
+            Text(speech_balloon_object, font, font2, reader, highlighted_answer)
         else:
             all_sprites.remove(speech_balloon)
-        pygame.display.update()
+        all_sprites.update()
+
+        display.update()
 
 def tutorial():
     global pygame
@@ -472,6 +491,7 @@ def new():
     global interaction_mark3
     global interaction_mark4
     global key_obtained
+    global highlighted_answer
 
     global bed_scenario
     global toilet_scenario
@@ -496,7 +516,7 @@ def new():
     highlighted_answer_minimum_boundary = 0
     highlighted_answer_maximum_boundary = 0
     remove_textbox = False
-    key_obtained = True
+    key_obtained = False
     toilet_scenario = 1
     bed_scenario = 2
     mob_scenario = 14

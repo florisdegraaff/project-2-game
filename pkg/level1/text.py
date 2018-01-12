@@ -1,11 +1,12 @@
-from pkg.foundation.essentials import *
+import pkg.foundation.essentials as essentials
+import pkg.foundation.display as display
 
 from .spritesheet import *
 from .settings import *
-
+pygame = essentials.pygame
 class Text(pygame.sprite.Sprite):
-    def __init__(self, speech_balloon_object, font, highlighted_answer):
-        pygame = essentials.pygame
+
+    def __init__(self, speech_balloon_object, font, font2, reader, highlighted_answer):
         pygame.sprite.Sprite.__init__(self)
         spritesheet = Spritesheet('pkg/level1/images/spritesheet.png')
         self.text_highlighted = 153, 153, 153

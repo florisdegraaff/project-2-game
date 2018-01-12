@@ -8,6 +8,7 @@ from .mob import *
 from .speechballoon import *
 from .spritesheet import *
 from .toilet import *
+from .text import *
 
 class Walls(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height):
@@ -54,6 +55,7 @@ class Player(pygame.sprite.Sprite):
         self.spritesheet = Spritesheet('pkg/level1/images/spritesheet.png')
         pygame.sprite.Sprite.__init__(self)
         self.walking = False
+        self.can_walk = True
         self.current_frame = 0
         self.last_update = 0
         self.load_images()
@@ -102,21 +104,21 @@ class Player(pygame.sprite.Sprite):
         self.speedx = 0
         self.speedy = 0
         self.keys = pygame.key.get_pressed()
-        if self.keys[pygame.K_UP]:
+        if (self.keys[pygame.K_UP] or self.keys[pygame.K_w]) and self.can_walk:
             if not self.visible_speech_balloon:
-                self.speedy = -3
+                self.speedy = -6
                 self.speedx = 0
-        if self.keys[pygame.K_DOWN]:
+        if (self.keys[pygame.K_DOWN] or self.keys[pygame.K_s])  and self.can_walk:
             if not self.visible_speech_balloon:
-                self.speedy = 3
+                self.speedy = 6
                 self.speedx = 0
-        if self.keys[pygame.K_LEFT]:
+        if (self.keys[pygame.K_LEFT] or self.keys[pygame.K_a])  and self.can_walk:
             if not self.visible_speech_balloon:
-                self.speedx = -3
+                self.speedx = -6
                 self.speedy = 0
-        if self.keys[pygame.K_RIGHT]:
+        if (self.keys[pygame.K_RIGHT] or self.keys[pygame.K_d])  and self.can_walk:
             if not self.visible_speech_balloon:
-                self.speedx = 3
+                self.speedx = 6
                 self.speedy = 0
 
         self.rect.x += self.speedx
