@@ -35,12 +35,6 @@ gettothechopper = pygame.image.load("pkg/level2/images/gettothechopper.png").con
 #arnold image
 busted = pygame.image.load("pkg/level2/images/busted.png").convert_alpha()
 
-#level sound
-pygame.mixer.init(44100, -16,2,2048)
-pygame.mixer.music.load("pkg/level2/sounds/elevator.mp3")
-
-
-
 def tutorial():
     global pygame
     display.window.fill((107, 115, 122))
@@ -63,9 +57,12 @@ def run():
     global running
     global pygame
 
+    #while running play the music
+    pygame.mixer.init(44100, -16,2,2048)
+    pygame.mixer.music.load("pkg/level2/sounds/elevator.mp3")
+    pygame.mixer.music.play(-1)
+
     timer = essentials.timer(3)
-    if timer.check_timer:
-        print ("timer is done")
 
     #groups
     playergroup = pygame.sprite.Group()
@@ -144,8 +141,7 @@ def run():
     #animated sprite
     clock = pygame.time.Clock()
     dt = clock.tick(60)
-    #play level music
-    pygame.mixer.music.play(-1)
+
 
     while running:
         # Input
@@ -167,19 +163,20 @@ def run():
                 elif event.key == pygame.K_s:
                     player.vel.y = 5
                     player.vel.x = 0
+
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_d and player.vel.x > 0:
                     player.vel.x = 0
-                    player.vel.y = 0
                 elif event.key == pygame.K_a and player.vel.x < 0:
                     player.vel.x = 0
-                    player.vel.y = 0
                 elif event.key == pygame.K_w:
                     player.vel.y = 0
-                    player.vel.x = 0
                 elif event.key == pygame.K_s:
                     player.vel.y = 0
-                    player.vel.x = 0
+
+        #play level music
+
+        #level sound
 
         #update all the groups
         enemygroup.update()
@@ -242,6 +239,10 @@ def run():
         if pygame.sprite.spritecollide(player, enemygroup, False):
             #show busted
             display.window.blit(busted, [400, 150])
+            #load hasta la vista
+            hastalavista = pygame.mixer.music.load("pkg/level2/sounds/hastalavista.mp3")
+            #play arnold sound
+            pygame.mixer.music.play(0)
             display.update()
             time.sleep(3)
             return False
@@ -250,27 +251,27 @@ def run():
         if pygame.sprite.spritecollide(player, tafelgroup, False):
             #show arnold face
             display.window.blit(gettothechopper, [0, 0])
-            #load arnold sound
+            #load arnold chopper sound
             pygame.mixer.music.load("pkg/level2/sounds/gettothechopper.mp3")
-            #play arnold sound
+            #play arnold chopper sound
             pygame.mixer.music.play(0)
             display.update()
             time.sleep(6)
             return True
 
+
             # Load in the fundemental functions in the game
-        running = essentials.run_essentials(event)
 
         # Output
 
         ## Update the display to show the changes you made
-        #counter for player animation
+        # counter for player animation
         player.counter(dt)
         player.counter2(dt)
         player.counter3(dt)
         player.counter4(dt)
 
-        # #counter for enemy animation
+        ##counter for enemy animation
         enemy.counter(dt)
         enemy2.counter(dt)
         enemy3.counter(dt)
