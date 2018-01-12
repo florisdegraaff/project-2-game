@@ -32,7 +32,9 @@ class LevelController:
                 if current_level <= 4:
                     self.load_level(current_level)
                 else:
-                    menu.run()
+                    level_controller = LevelController()
+                    level_controller.start_game()
+                    
 
     def start_game (self):
         level = menu.run()
