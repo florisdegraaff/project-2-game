@@ -9,6 +9,21 @@ import pkg.level3.main as level3
 import pkg.level4.main as level4
 import pkg.level5.main as level5
 
+class LevelController:
+
+    current_level = 0
+
+    levels = [
+        level1,
+        level2,
+        level3,
+        level4,
+        level5
+    ]
+
+def start_game (self):
+    level = menu.run()
+
 
 running = True
 pygame = essentials.pygame
