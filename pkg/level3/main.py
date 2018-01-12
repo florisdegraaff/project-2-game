@@ -29,4 +29,4 @@ def run():
         display.update()
 
 def tutorial ():
-    print ("tutorial")
+    return True
