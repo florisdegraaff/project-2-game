@@ -125,7 +125,7 @@ def run():
         #set the new position based on direction change
         power += power_change
         #player y pos remains same, x pos goes forward on game win
-        if ticks > 300:
+        if ticks > 3000:
             power = 0
             x_change = 5
         if ticks < 120:
@@ -162,11 +162,11 @@ def run():
         enemy.draw(display.window, index % enemy.totalCellCount, enemy_startx, enemy_starty, CENTER_HANDLE)
             
         #after 20 seconds enemy copters speedup
-        if (ticks > 100 and ticks <= 200):
+        if (ticks > 1000 and ticks <= 2000):
             enemy_speed = 12
 
         #after 40 seconds 
-        if (ticks > 200 and ticks <= 300):
+        if (ticks > 2000 and ticks <= 3000):
             enemy_speed = 13
             #when player collides with bomb, restart level
             bombs(bomb_startx, bomb_starty, bomb_height, bomb_width)
@@ -175,14 +175,14 @@ def run():
                 return False
             
         #display message after 20 seconds
-        if (ticks == 200):
-            message_display("The copts are pissed!", 40, 300, 600)
+        if (ticks == 2000):
+            message_display("The cops are pissed!", 40, 300, 600)
             #pygame.mixer.Channel(0).stop()
             #pygame.mixer.Channel(2).play(pygame.mixer.Sound('files/sounds/thestruggle.wav'))
             time.sleep(3)
 
         #game win
-        if (ticks > 300):
+        if (ticks > 3000):
             enemy_starty = 1100
             bomb_starx = 2000
             gameWon = True
