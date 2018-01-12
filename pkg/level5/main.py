@@ -61,6 +61,9 @@ def run():
     #set title for current level
     display.set_title("Level 5")
 
+    #set timer
+    timer = essentials.timer(30)
+
     #player configuration
     x, y = (100),(620)
     choppah_width = 245
@@ -115,34 +118,37 @@ def run():
                     x_change = -5
                 if event.key == pygame.K_RIGHT:
                     x_change = 5
+
+        if running:
+            running = not timer.check_timer()
                     
         #set the new position based on direction change
         power += power_change
         #player y pos remains same, x pos goes forward on game win
-        if (ticks > 3000):
+        if ticks > 3000:
             power = 0
             x_change = 5
-        if (ticks < 120):
+        if ticks < 120:
             x += 0.6
             y -= 2.5
+        if ticks >= 120:
             y += power
             x += x_change
             bomb_starty -= bomb_speed
             enemy_startx -= enemy_speed
 
-        if (bomb_starty > display_height + 100):
+        if  bomb_starty > display_height + 100:
             bomb_startx = random.randrange(0, display_width - 100)
             bomb_starty = 0
-        if (enemy_starty > y):
+        if  enemy_starty > y:
             enemy_starty -= 1.2
-        if (enemy_starty < y):
+        if  enemy_starty < y:
             enemy_starty += 1.2
         
         if enemy_startx < -250:
             enemy_starty = random.randrange(0, display_height - 100)
             enemy_startx = 1500
 
-            
         #drawing rectangles for entities with collision
         bombRect = pygame.draw.rect(display.window, (0,0,0), (bomb_startx,bomb_starty,bomb_width,bomb_height))
         choepahRect = pygame.draw.rect(display.window, (0,0,0), (x,y,choppah_width,choppah_height))
@@ -167,7 +173,7 @@ def run():
             if choepahRect.colliderect(bombRect):
                 lose("by bomb")
                 return False
-        #display message after 40 seconds
+        #display message after 20 seconds
         if (ticks == 2000):
             running = False
             message_display("The copts are pissed!", 40, 300, (display.window_size[0]/2))
@@ -177,7 +183,7 @@ def run():
             running = True
 
         #game win
-        if (ticks > 200):
+        if (ticks > 3000):
             enemy_starty = 1100
             bomb_starx = 2000
             gameWon = True
