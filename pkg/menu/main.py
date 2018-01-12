@@ -9,22 +9,6 @@ import pkg.level3.main as level3
 import pkg.level4.main as level4
 import pkg.level5.main as level5
 
-class LevelController:
-
-    current_level = 0
-
-    levels = [
-        level1,
-        level2,
-        level3,
-        level4,
-        level5
-    ]
-
-def start_game (self):
-    level = menu.run()
-
-
 running = True
 pygame = essentials.pygame
 
@@ -47,19 +31,17 @@ def run():
 
     display.set_title('Menu')
     gameDisplay.blit(back,(0,0))
-    gameDisplay.blit(levelimg1,(236,300))
-    gameDisplay.blit(levelimg2,(412,300))
-    gameDisplay.blit(levelimg3,(588,300))
-    gameDisplay.blit(levelimg4,(764,300))
-    gameDisplay.blit(levelimg5,(940,300))
+    gameDisplay.blit(levelimg1,(306,300))
+    gameDisplay.blit(levelimg2,(480,300))
+    gameDisplay.blit(levelimg3,(658,300))
+    gameDisplay.blit(levelimg4,(834,300))
 
     pygame.display.flip()
 
-    lvl1 = pygame.Rect(236,300,140,140)
-    lvl2 = pygame.Rect(412,300,140,140)
-    lvl3 = pygame.Rect(588,300,140,140)
-    lvl4 = pygame.Rect(764,300,140,140)
-    lvl5 = pygame.Rect(940,300,140,140)
+    lvl1 = pygame.Rect(306,300,140,140)
+    lvl2 = pygame.Rect(480,300,140,140)
+    lvl3 = pygame.Rect(658,300,140,140)
+    lvl4 = pygame.Rect(834,300,140,140)
 
     while running == True:
 
@@ -77,12 +59,9 @@ def run():
                     return 1
                 
                 if lvl3.collidepoint(x, y):
-                    return 2
-                
-                if lvl4.collidepoint(x, y):
                     return 3
                 
-                if lvl5.collidepoint(x, y):
+                if lvl4.collidepoint(x, y):
                     return 4
 
         display.update()

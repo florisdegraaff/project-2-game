@@ -64,7 +64,7 @@ def run():
     global running
     global pygame
     #set title for current level
-    display.set_title("Level 5")
+    display.set_title("Level 4")
 
     #player configuration
     x, y = (100),(620)
