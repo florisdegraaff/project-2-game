@@ -32,15 +32,15 @@ class Game:
 
         # load spritesheet image
         self.spritesheet = Spritesheet(path.join(image_dir, SPRITESHEET))
-        
+
         # load game background
         self.background = pygame.image.load(path.join(image_dir, BACKGROUND)).convert()
         self.background_rect = self.background.get_rect()
-      
+
         # load start screen
         self.start_screen = pygame.image.load(path.join(image_dir, START_SCREEN)).convert()
         self.start_screen_rect = self.start_screen.get_rect()
-        
+
         # load instructions screen
         self.instructions_screen = pygame.image.load(path.join(image_dir, INSTRUCTIONS)).convert()
         self.instructions_screen_rect = self.instructions_screen.get_rect()
@@ -53,7 +53,7 @@ class Game:
         with open(path.join(script_dir, SCRIPT)) as csv_file:
             self.reader = list(csv.reader(csv_file, delimiter = ';'))
             self.total_rows = len(self.reader)
-           
+
         #for row in range(0, self.total_rows):
         #    print('Scenario', row + 1, 'bevat', len(self.reader[row]), 'kolom(men):', self.reader[row])
 
@@ -86,7 +86,7 @@ class Game:
         self.current_screen = 0
 
         # upper wall in player cell
-        wall1 = Walls(619, 0, 600, 50) 
+        wall1 = Walls(619, 0, 600, 50)
         # right wall in player cell
         wall2 = Walls(1219, 0, 70, 706)
         # the bars in the other cell
@@ -143,7 +143,7 @@ class Game:
 
     def update(self):
         # Game loop - update
-        self.all_sprites.update() 
+        self.all_sprites.update()
 
         if self.player.speedx or self.player.speedy > 0:
             self.all_sprites.remove(self.interaction_mark1, self.interaction_mark2, self.interaction_mark3, self.interaction_mark4)
@@ -160,7 +160,7 @@ class Game:
                     self.highlighted_answer_minimum_boundary = 4
                     self.highlighted_answer_maximum_boundary = 5
                 self.speech_balloon_object.choose_scenario(self, self.reader, self.bed_scenario)
-                
+
         # for interaction with the toilet
         if (self.player.rect.x >= 640 and self.player.rect.x <= 772) and self.player.rect.y <= 150:
             self.interact = False
@@ -183,18 +183,18 @@ class Game:
         if hits_wall:
             self.player.rect.x = self.player.rect.x - self.player.speedx
             self.player.rect.y = self.player.rect.y - self.player.speedy
-       
+
         hits_bed = pygame.sprite.spritecollide(self.player, self.bed, False)
         if hits_bed:
             self.player.rect.x = self.player.rect.x - self.player.speedx
             self.player.rect.y = self.player.rect.y - self.player.speedy
 
-            if self.player.speedx == 0: 
-                self.all_sprites.add(self.interaction_mark2)    
+            if self.player.speedx == 0:
+                self.all_sprites.add(self.interaction_mark2)
                 self.interact = False
 
-            if self.player.speedy == 0: 
-                self.all_sprites.add(self.interaction_mark2)       
+            if self.player.speedy == 0:
+                self.all_sprites.add(self.interaction_mark2)
                 self.interact = False
 
 
@@ -205,11 +205,11 @@ class Game:
 
             if self.key_obtained == False:
                 self.interact = False
-            
-                if self.player.speedx == 0: 
+
+                if self.player.speedx == 0:
                     self.all_sprites.add(self.interaction_mark1)
-                
-                if self.player.speedy == 0: 
+
+                if self.player.speedy == 0:
                     self.all_sprites.add(self.interaction_mark1)
                     if self.player.keys[pygame.K_SPACE]:
                         #self.key_obtained = False
@@ -222,25 +222,25 @@ class Game:
         if hits_jaildoor:
             self.player.rect.x = self.player.rect.x - self.player.speedx
             self.player.rect.y = self.player.rect.y - self.player.speedy
-            
+
 
         hits_toilet = pygame.sprite.spritecollide(self.player, self.toilet, False)
         if hits_toilet:
             self.player.rect.x = self.player.rect.x - self.player.speedx
             self.player.rect.y = self.player.rect.y - self.player.speedy
-            if self.player.speedx == 0: 
-                self.all_sprites.add(self.interaction_mark3)    
+            if self.player.speedx == 0:
+                self.all_sprites.add(self.interaction_mark3)
                 self.interact = False
 
-            if self.player.speedy == 0: 
-                self.all_sprites.add(self.interaction_mark3)       
+            if self.player.speedy == 0:
+                self.all_sprites.add(self.interaction_mark3)
                 self.interact = False
-        
+
         hits_exit = pygame.sprite.spritecollide(self.player, self.exits, False)
         if hits_exit:
             self.player.rect.x = self.player.rect.x - self.player.speedx
             self.player.rect.y = self.player.rect.y - self.player.speedy
-            pygame.quit()
+            return True
 
     def events(self):
         # Game loop - events
@@ -279,10 +279,10 @@ class Game:
                             self.multiple_choice_answers = False
                             self.highlighted_answer = 0
                             self.speech_balloon_object.choose_scenario(self, self.reader, self.bed_scenario)
-    
+
                         elif self.speech_balloon_object.scenario == 2 and self.highlighted_answer == 5: # Do you want to play a game?;Answer 3 questions...;and I'll hand over the key --> No
                             self.visible_speech_balloon = False
-        
+
                         elif self.speech_balloon_object.scenario == 3: # Here is my first question:;The person who knows he uses;it, doesn't know he uses it.;What is it?
                             self.bed_scenario = 4
                             self.multiple_choice_answers = True
@@ -296,7 +296,7 @@ class Game:
                             self.multiple_choice_answers = False
                             self.highlighted_answer = 0
                             self.speech_balloon_object.choose_scenario(self, self.reader, self.bed_scenario)
-                            
+
                         elif self.speech_balloon_object.scenario == 4 and self.highlighted_answer == 4: # Insurance;Necktie;Sugar;Coffin
                             self.bed_scenario = 6
                             self.multiple_choice_answers = False
@@ -324,13 +324,13 @@ class Game:
                             self.multiple_choice_answers = False
                             self.highlighted_answer = 0
                             self.speech_balloon_object.choose_scenario(self, self.reader, self.bed_scenario)
-                            
+
                         elif self.speech_balloon_object.scenario == 8 and self.highlighted_answer == 2: # They prey to Christ;He sold his soul to Santa;There are none;No
                             self.bed_scenario = 10
                             self.multiple_choice_answers = False
                             self.highlighted_answer = 0
                             self.speech_balloon_object.choose_scenario(self, self.reader, self.bed_scenario)
-                            
+
                         elif self.speech_balloon_object.scenario == 9: # You're wrong!;I guess you're not so smart;...
                             self.bed_scenario = 7
                             self.visible_speech_balloon = False
@@ -401,7 +401,7 @@ class Game:
                             self.multiple_choice_answers = False
                             self.highlighted_answer = 0
                             self.speech_balloon_object.choose_scenario(self, self.reader, self.mob_scenario)
-    
+
                         elif self.speech_balloon_object.scenario == 21 and self.highlighted_answer == 1: # ...IF SHE FELL IN NUCLEAR WASTE,;NO ONE WOULD NOTICE!;...SHE BRINGS COUPONS TO;THE PENNY ARCADE!;...SHE SHOWED UP EARLY;FOR HER OWN FUNERAL!
                             self.mob_scenario = 23
                             self.multiple_choice_answers = False
@@ -411,7 +411,7 @@ class Game:
                         elif self.speech_balloon_object.scenario == 22: # You ain't hurtin nobody,;you little bitch!
                             self.mob_scenario = 15
                             self.visible_speech_balloon = False
-    
+
                         elif self.speech_balloon_object.scenario == 23: # Ahhh, it hurts...;IT HURTS!
                             self.mob_scenario = 24
                             self.speech_balloon_object.choose_scenario(self, self.reader, self.mob_scenario)
@@ -429,7 +429,7 @@ class Game:
                             self.multiple_choice_answers = False
                             self.highlighted_answer = 0
                             self.speech_balloon_object.choose_scenario(self, self.reader, self.mob_scenario)
-    
+
                         elif self.speech_balloon_object.scenario == 25 and self.highlighted_answer == 2: # ...SHE BRINGS COUPONS TO;THE PENNY ARCADE!;...SHE SHOWED UP EARLY;FOR HER OWN FUNERAL!;...THE ONLY TIME SHE'S LOW;IS AT A LIMBO CONTEST!
                             self.mob_scenario = 27
                             self.multiple_choice_answers = False
@@ -439,7 +439,7 @@ class Game:
                         elif self.speech_balloon_object.scenario == 26: # You had your chance,;now FUCK OFF!
                             self.mob_scenario = 15
                             self.visible_speech_balloon = False
-    
+
                         elif self.speech_balloon_object.scenario == 27: # Enough, enough!; I'm suffocating...;sob.. sob... *
                             self.mob_scenario = 28
                             self.bed_scenario = 30
@@ -447,7 +447,7 @@ class Game:
 
                         elif self.speech_balloon_object.scenario == 28: # I'm done talking to you;Leave me alone...
                             self.visible_speech_balloon = False
-                            
+
                         elif self.speech_balloon_object.scenario == 29: # Now to claim the key;and get the fuck outta here! *
                             self.visible_speech_balloon = False
 
@@ -465,14 +465,14 @@ class Game:
                             self.bed_scenario = 34
                             self.key_obtained = True
                             self.visible_speech_balloon = False
-    
+
                         elif self.speech_balloon_object.scenario == 33: # I already got the key...
                             self.visible_speech_balloon = False
-    
+
                         elif self.speech_balloon_object.scenario == 34: # Drop by anytime pal.
-                            self.bed_scenario = 35    
+                            self.bed_scenario = 35
                             self.speech_balloon_object.choose_scenario(self, self.reader, self.bed_scenario)
-                                
+
                         elif self.speech_balloon_object.scenario == 35: # Wouldn't count on it "pal" *
                             self.bed_scenario = 34
                             self.visible_speech_balloon = False
@@ -488,14 +488,14 @@ class Game:
         elif self.current_screen == 2:
             self.screen.blit(self.background, self.background_rect)
             self.all_sprites.draw(self.screen)
-                
+
             if self.visible_speech_balloon == True:
                 self.all_sprites.add(self.speech_balloon)
                 Text(self, self.highlighted_answer)
             elif self.visible_speech_balloon == False:
                 self.all_sprites.remove(self.speech_balloon)
 
-            pygame.display.update()    
+            pygame.display.update()
 
 game = Game()
 

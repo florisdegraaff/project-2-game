@@ -1,12 +1,12 @@
 # Sprite classes
 import pygame
-from settings import *
+from pkg.level1.settings import *
 
 class Spritesheet:
     # utility class for loading and parsing spritesheets
     def __init__(self, filename):
         self.spritesheet = pygame.image.load(filename).convert()
-    
+
     def get_image(self, x, y, width, height):
         # grabs an image out of a spritesheet
         image = pygame.Surface((width, height))
@@ -112,7 +112,7 @@ class SpeechBalloon(pygame.sprite.Sprite):
 class Text(pygame.sprite.Sprite):
     def __init__(self, game, highlighted_answer):
         pygame.sprite.Sprite.__init__(self)
-        
+
         self.text_highlighted = 153, 153, 153
         self.text_not_highlighted = 219,219,219
 
@@ -132,7 +132,7 @@ class Text(pygame.sprite.Sprite):
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][0], False, BLACK, self.highlighted), (335, 530))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_not_highlighted), (335, 560))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][2], False, BLACK, self.text_not_highlighted), (335, 590))
-            
+
         if game.speech_balloon_object.amount_of_columns == 3 and highlighted_answer == 2:
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][0], False, BLACK, self.text_not_highlighted), (335, 530))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_highlighted), (335, 560))
@@ -142,7 +142,7 @@ class Text(pygame.sprite.Sprite):
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][0], False, BLACK, self.text_not_highlighted), (335, 530))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_not_highlighted), (335, 560))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][2], False, BLACK, self.text_highlighted), (335, 590))
-       
+
         if game.speech_balloon_object.amount_of_columns == 4 and highlighted_answer == 0:
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][0], False, BLACK, self.text_not_highlighted), (335, 530))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_not_highlighted), (335, 560))
@@ -160,7 +160,7 @@ class Text(pygame.sprite.Sprite):
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_highlighted), (335, 560))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][2], False, BLACK, self.text_not_highlighted), (335, 590))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][3], False, BLACK, self.text_not_highlighted), (335, 620))
-        
+
         if game.speech_balloon_object.amount_of_columns == 4 and highlighted_answer == 3:
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][0], False, BLACK, self.text_not_highlighted), (335, 530))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_not_highlighted), (335, 560))
@@ -186,21 +186,21 @@ class Text(pygame.sprite.Sprite):
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][2], False, BLACK, self.text_not_highlighted), (335, 590))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][3], False, BLACK, self.text_not_highlighted), (335, 620))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][4], False, BLACK, self.text_not_highlighted), (335, 650))
-    
+
         if game.speech_balloon_object.amount_of_columns == 5 and highlighted_answer == 2:
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][0], False, BLACK, self.text_not_highlighted), (335, 530))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_highlighted), (335, 560))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][2], False, BLACK, self.text_not_highlighted), (335, 590))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][3], False, BLACK, self.text_not_highlighted), (335, 620))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][4], False, BLACK, self.text_not_highlighted), (335, 650))
-            
+
         if game.speech_balloon_object.amount_of_columns == 5 and highlighted_answer == 3:
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][0], False, BLACK, self.text_not_highlighted), (335, 530))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_not_highlighted), (335, 560))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][2], False, BLACK, self.text_highlighted), (335, 590))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][3], False, BLACK, self.text_not_highlighted), (335, 620))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][4], False, BLACK, self.text_not_highlighted), (335, 650))
-            
+
         if game.speech_balloon_object.amount_of_columns == 5 and highlighted_answer == 4:
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][0], False, BLACK, self.text_not_highlighted), (335, 530))
             game.screen.blit(game.font.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_not_highlighted), (335, 560))
@@ -230,7 +230,7 @@ class Text(pygame.sprite.Sprite):
             game.screen.blit(game.font2.render(game.reader[game.speech_balloon_object.current_row][3], False, BLACK, self.text_highlighted), (335, 600))
             game.screen.blit(game.font2.render(game.reader[game.speech_balloon_object.current_row][4], False, BLACK, self.text_not_highlighted), (335, 630))
             game.screen.blit(game.font2.render(game.reader[game.speech_balloon_object.current_row][5], False, BLACK, self.text_not_highlighted), (335, 650))
-    
+
         if game.speech_balloon_object.amount_of_columns == 6 and highlighted_answer == 3:
             game.screen.blit(game.font2.render(game.reader[game.speech_balloon_object.current_row][0], False, BLACK, self.text_not_highlighted), (335, 530))
             game.screen.blit(game.font2.render(game.reader[game.speech_balloon_object.current_row][1], False, BLACK, self.text_not_highlighted), (335, 550))
@@ -263,7 +263,7 @@ class Player(pygame.sprite.Sprite):
         for frame in self.walk_up_frames:
             frame.set_colorkey(BLACK)
 
-        
+
         self.walk_down_frames = [self.game.spritesheet.get_image(889, 263, 57, 82),
                                self.game.spritesheet.get_image(780, 174, 57, 82),
                                self.game.spritesheet.get_image(889, 263, 57, 82),
@@ -309,9 +309,9 @@ class Player(pygame.sprite.Sprite):
                 self.speedx = 6
                 self.speedy = 0
 
-        self.rect.x += self.speedx 
+        self.rect.x += self.speedx
         self.rect.y += self.speedy
-        
+
     def animate(self):
         now = pygame.time.get_ticks()
         if self.speedx | self.speedy != 0:
