@@ -6,8 +6,8 @@ FPS = 60
 SPRITESHEET = "spritesheet.png"
 BACKGROUND = "background.png"
 SCRIPT = "script.csv"
-MUSIC = "minigame1_soundtrack.ogg"
-FONT = "pkg/level1/fonts/prstart.ttf"
+MUSIC = "files/music/minigame1_soundtrack.ogg"
+FONT = "files/fonts/prstart.ttf"
 START_SCREEN = "start_screen.jpg"
 INSTRUCTIONS = "instructions_screen.jpg"
 
