@@ -94,6 +94,7 @@ def run():
     cheatsEnabled = False
 
     pygame.mixer.Channel(0).set_volume(0.5)
+    pygame.mixer.Channel(2).stop()
     pygame.mixer.Channel(0).play(pygame.mixer.Sound('files/sounds/victory.wav'))
     pygame.mixer.Channel(1).play(pygame.mixer.Sound('files/sounds/coptah.wav'))
 
@@ -189,6 +190,7 @@ def run():
             if (x > 1280):
                 message_display("You have escaped!", 35, 350, 600)
                 if (x > 2500):
+                    pygame.mixer.Channel(2).stop()
                     gameWon = True
                     return True
 
