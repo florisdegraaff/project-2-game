@@ -3,12 +3,6 @@ from pkg.foundation import display
 
 display.prepare_screen()
 
-import pkg.level1.main as level1
-import pkg.level2.main as level2
-import pkg.level3.main as level3
-import pkg.level4.main as level4
-import pkg.level5.main as level5
-
 running = True
 pygame = essentials.pygame
 
