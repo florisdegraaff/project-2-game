@@ -9,6 +9,9 @@ from .Enemy import Guard, Bullets
 running = True
 pygame = essentials.pygame
 
+pygame.mixer.pre_init(44100,16,2,4096)
+pygame.init()
+
 def run():
     global running
     global pygame
@@ -19,10 +22,12 @@ def run():
     player = Player ()
     enemies = []
 
-    display.set_title('Level 4')
-    timer = essentials.timer(60)
+    display.set_title('Level 3')
+    timer = essentials.timer(30)
     enemy_spawn_timer = essentials.timer (0)
-
+    
+    pygame.mixer.Channel(4).set_volume(0.4)
+    pygame.mixer.Channel(1).play(pygame.mixer.Sound('files/sounds/run.wav'))
     while running == True:
 
         display.prepare_update()
@@ -49,6 +54,7 @@ def run():
                 helicopter.update()
                 player.end_game()
                 if player.position.x > helicopter.position.x:
+                    pygame.mixer.Channel(0).stop()
                     return True
             else:
                 if enemy_spawn_timer.check_timer():

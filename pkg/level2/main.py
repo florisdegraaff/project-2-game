@@ -59,7 +59,7 @@ def run():
 
     #while running play the music
     pygame.mixer.init(44100, -16,2,2048)
-    pygame.mixer.music.load("pkg/level2/sounds/elevator.mp3")
+    pygame.mixer.music.load("pkg/level2/sounds/elevator.wav")
     pygame.mixer.music.play(-1)
 
     timer = essentials.timer(3)
@@ -235,7 +235,7 @@ def run():
             #show busted
             display.window.blit(busted, [400, 150])
             #load hasta la vista
-            hastalavista = pygame.mixer.music.load("pkg/level2/sounds/hastalavista.mp3")
+            hastalavista = pygame.mixer.music.load("pkg/level2/sounds/hastalavista.wav")
             #play arnold sound
             pygame.mixer.music.play(0)
             display.update()
@@ -247,7 +247,7 @@ def run():
             #show arnold face
             display.window.blit(gettothechopper, [0, 0])
             #load arnold chopper sound
-            pygame.mixer.music.load("pkg/level2/sounds/gettothechopper.mp3")
+            pygame.mixer.music.load("pkg/level2/sounds/gettothechopper.wav")
             #play arnold chopper sound
             pygame.mixer.music.play(0)
             display.update()

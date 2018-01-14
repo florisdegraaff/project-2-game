@@ -93,8 +93,8 @@ def run():
     index = 0
     cheatsEnabled = False
 
-    #music/sounds (optional)
-    #pygame.mixer.Channel(0).play(pygame.mixer.Sound('files/sounds/victory.wav'))
+    pygame.mixer.Channel(0).set_volume(0.5)
+    pygame.mixer.Channel(0).play(pygame.mixer.Sound('files/sounds/victory.wav'))
     pygame.mixer.Channel(1).play(pygame.mixer.Sound('files/sounds/coptah.wav'))
 
     #game loop
@@ -176,8 +176,9 @@ def run():
         #display message after 20 seconds
         if (ticks == 2000):
             message_display("The cops are pissed!", 40, 300, 600)
-            #pygame.mixer.Channel(0).stop()
-            #pygame.mixer.Channel(2).play(pygame.mixer.Sound('files/sounds/thestruggle.wav'))
+            pygame.mixer.Channel(0).stop()
+            pygame.mixer.Channel(2).set_volume(0.5)
+            pygame.mixer.Channel(2).play(pygame.mixer.Sound('files/sounds/thestruggle.wav'))
             time.sleep(3)
 
         #game win
