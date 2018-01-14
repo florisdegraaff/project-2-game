@@ -1,5 +1,6 @@
 from pkg.foundation import essentials
 from pkg.foundation import display
+from .message_display import text_objects, message_display
 
 display.prepare_screen()
 
@@ -24,6 +25,8 @@ def run():
 
     display.set_title('Menu')
     gameDisplay.blit(back,(0,0))
+    message_display("ESCAPE", 60, 130, 630)
+    message_display("Escape prison with the help of your friend Arnold Schwarzenegger by completing the four levels", 20, 690, 500)
     gameDisplay.blit(levelimg1,(306,300))
     gameDisplay.blit(levelimg2,(480,300))
     gameDisplay.blit(levelimg3,(658,300))

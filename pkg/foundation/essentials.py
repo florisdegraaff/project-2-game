@@ -23,7 +23,7 @@ def run_essentials(event, level = True):
         if event.key == pygame.K_ESCAPE:
             running = False
             return False
-
+        
     return True
 
 class timer ():
