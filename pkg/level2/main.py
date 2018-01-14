@@ -40,8 +40,8 @@ def tutorial():
     display.window.fill((107, 115, 122))
     message_display("Find the phone to connect Arnold.", 30, 200, 600)
     message_display("Dont let the guards get you.", 30, 230, 600)
-    message_display("Press WASD-Keys to move", 30, 260, 600)
-    message_display("Press any key to continue", 30, 320, 600)
+    message_display("Press the Arrow-Keys to move.", 30, 260, 600)
+    message_display("Press any key to continue.", 30, 320, 600)
     while True:
         #End tutorial when any keys is pressed
         for event in pygame.event.get():
@@ -150,27 +150,27 @@ def run():
                 return True
             #player movement
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_d:
+                if event.key == pygame.K_RIGHT:
                     player.vel.x = 5
                     player.vel.y = 0
-                elif event.key == pygame.K_a:
+                elif event.key == pygame.K_LEFT:
                     player.vel.x = -5
                     player.vel.y = 0
-                elif event.key == pygame.K_w:
+                elif event.key == pygame.K_UP:
                     player.vel.y = -5
                     player.vel.x = 0
-                elif event.key == pygame.K_s:
+                elif event.key == pygame.K_DOWN:
                     player.vel.y = 5
                     player.vel.x = 0
 
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_d and player.vel.x > 0:
+                if event.key == pygame.K_RIGHT and player.vel.x > 0:
                     player.vel.x = 0
-                elif event.key == pygame.K_a and player.vel.x < 0:
+                elif event.key == pygame.K_LEFT and player.vel.x < 0:
                     player.vel.x = 0
-                elif event.key == pygame.K_w:
+                elif event.key == pygame.K_UP:
                     player.vel.y = 0
-                elif event.key == pygame.K_s:
+                elif event.key == pygame.K_DOWN:
                     player.vel.y = 0
 
         #update all the groups
