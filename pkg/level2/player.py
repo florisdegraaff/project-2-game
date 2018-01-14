@@ -50,7 +50,7 @@ class Player(pygame.sprite.Sprite):
     def counter(self, dt):
         key = pygame.key.get_pressed()
         clock = pygame.time.Clock()
-        if key[pygame.K_d]:
+        if key[pygame.K_RIGHT]:
             self.timer += dt
         while self.timer >= self.frame_duration:
             self.timer -= self.frame_duration
@@ -59,7 +59,7 @@ class Player(pygame.sprite.Sprite):
     def counter2(self, dt):
         key = pygame.key.get_pressed()
         clock = pygame.time.Clock()
-        if key[pygame.K_a]:
+        if key[pygame.K_LEFT]:
             self.timer += dt
         while self.timer >= self.frame_duration:
             self.timer -= self.frame_duration
@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite):
     def counter3(self, dt):
         key = pygame.key.get_pressed()
         clock = pygame.time.Clock()
-        if key[pygame.K_w]:
+        if key[pygame.K_UP]:
             self.timer += dt
         while self.timer >= self.frame_duration:
             self.timer -= self.frame_duration
@@ -77,7 +77,7 @@ class Player(pygame.sprite.Sprite):
     def counter4(self, dt):
         key = pygame.key.get_pressed()
         clock = pygame.time.Clock()
-        if key[pygame.K_s]:
+        if key[pygame.K_DOWN]:
             self.timer += dt
         while self.timer >= self.frame_duration:
             self.timer -= self.frame_duration
