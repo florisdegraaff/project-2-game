@@ -106,7 +106,6 @@ def tutorial():
         for event in pygame.event.get():
             # Load in the fundemental functions in the game
             tutorial = essentials.run_essentials(event)
-            print (tutorial)
             if not tutorial:
                 return False
 
