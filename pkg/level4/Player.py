@@ -12,6 +12,7 @@ class Player:
     jump_counter = -20
 
     def __init__(self):
+        self.end_game_active = False
         self.isCrawling = False
         self.rect = pygame.draw.rect(display.window, (122, 122, 122), pygame.Rect(self.position, self.size))
         self.image = [
@@ -52,8 +53,8 @@ class Player:
                 self.currentSprite+=1
             else:
                 self.currentSprite = 0
-
-        self.rect = pygame.draw.rect(display.window, (122, 122, 122), pygame.Rect(self.position, self.size))
+        if not self.end_game_active:
+            self.rect = pygame.draw.rect(display.window, (122, 122, 122), pygame.Rect(self.position, self.size))
         if self.isCrawling:
             display.window.blit(self.crawlImages[self.currentSprite], self.position)
         else:
@@ -63,6 +64,7 @@ class Player:
         self.isCrawling = False
 
     def end_game (self):
+        self.end_game_active = True
         self.position.x = self.position.x + 10
 
 class Helicopter:
