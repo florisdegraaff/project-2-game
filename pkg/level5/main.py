@@ -93,7 +93,7 @@ def run():
     index = 0
     cheatsEnabled = False
 
-    pygame.mixer.Channel(0).set_volume(0.5)
+    pygame.mixer.Channel(0).set_volume(0.4)
     pygame.mixer.Channel(2).stop()
     pygame.mixer.Channel(0).play(pygame.mixer.Sound('files/sounds/victory.wav'))
     pygame.mixer.Channel(1).play(pygame.mixer.Sound('files/sounds/coptah.wav'))
@@ -121,6 +121,8 @@ def run():
                         cheatsEnabled = False
                     else:
                         cheatsEnabled = True
+                if event.key == pygame.K_b:
+                    return True
 
         #set the new position based on direction change
         power += power_change
@@ -151,9 +153,9 @@ def run():
 
         #drawing rectangles for entities with collision
         bombRect = pygame.draw.rect(display.window, (0,0,0), (bomb_startx,bomb_starty,bomb_width,bomb_height))
-        choepahRect = pygame.draw.rect(display.window, (0,0,0), (x,y,choppah_width,choppah_height))
-        enemyRect = pygame.draw.rect(display.window, (0,0,0), (enemy_startx,enemy_starty,enemy_width,enemy_height))
-
+        choepahRect = pygame.draw.rect(display.window, (0,0,0), (x,y,choppah_width - 30,choppah_height))
+        enemyRect = pygame.draw.rect(display.window, (0,0,0), (enemy_startx + 10,enemy_starty,enemy_width - 10,enemy_height))
+        
         #draw the background over the rectangles
         background.draw(display.window, index % background.totalCellCount, 0, 0, CENTER_HANDLE)
 
@@ -190,7 +192,7 @@ def run():
             if (x > 1280):
                 message_display("You have escaped!", 35, 350, 600)
                 if (x > 2500):
-                    pygame.mixer.Channel(2).stop()
+                    pygame.mixer.Channel(2).fadeout(1000)
                     gameWon = True
                     return True
 

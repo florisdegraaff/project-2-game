@@ -78,6 +78,11 @@ def run ():
                         if multiple_choice_answers:
                             if highlighted_answer > highlighted_answer_minimum_boundary:
                                 highlighted_answer -= 1
+                                
+                if event.key == pygame.K_b:
+                    pygame.mixer.Channel(1).stop()
+                    return True
+                                
                 if event.key == pygame.K_DOWN:
                     if visible_speech_balloon:
                         if multiple_choice_answers:
@@ -463,8 +468,7 @@ def load_data():
     background_rect = background.get_rect()
 
     # load music
-    pygame.mixer.music.load(MUSIC)
-    pygame.mixer.music.play(-1, 0.0)
+    pygame.mixer.Channel(1).play(pygame.mixer.Sound('files/music/minigame1_soundtrack.ogg'))
 
     # load script
     with open(path.join(script_dir, SCRIPT)) as csv_file:

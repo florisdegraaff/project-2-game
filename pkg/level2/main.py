@@ -59,8 +59,7 @@ def run():
 
     #while running play the music
     pygame.mixer.init(44100, -16,2,2048)
-    pygame.mixer.music.load("pkg/level2/sounds/elevator.wav")
-    pygame.mixer.music.play(-1)
+    pygame.mixer.Channel(1).play(pygame.mixer.Sound('pkg/level2/sounds/elevator.wav'))
 
     timer = essentials.timer(3)
 
@@ -162,6 +161,10 @@ def run():
                 elif event.key == pygame.K_DOWN:
                     player.vel.y = 5
                     player.vel.x = 0
+                if event.key == pygame.K_b:
+                    pygame.mixer.Channel(0).stop()
+                    pygame.mixer.Channel(1).stop()
+                    return True
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT and player.vel.x > 0:

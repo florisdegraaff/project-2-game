@@ -26,7 +26,7 @@ def run():
     timer = essentials.timer(30)
     enemy_spawn_timer = essentials.timer (0)
     
-    pygame.mixer.Channel(4).set_volume(0.4)
+    pygame.mixer.Channel(1).set_volume(0.4)
     pygame.mixer.Channel(1).play(pygame.mixer.Sound('files/sounds/run.wav'))
     while running == True:
 
@@ -45,6 +45,10 @@ def run():
                         jumping = True
                     elif event.key == pygame.K_LCTRL:
                         crawling = True
+                if event.key == pygame.K_b:
+                    pygame.mixer.Channel(1).stop()
+                    return True
+                
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LCTRL:
                     crawling = False
