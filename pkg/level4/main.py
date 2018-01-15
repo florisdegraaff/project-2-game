@@ -58,7 +58,7 @@ def run():
                 helicopter.update()
                 player.end_game()
                 if player.position.x > helicopter.position.x:
-                    pygame.mixer.Channel(0).stop()
+                    pygame.mixer.Channel(1).stop()
                     return True
             else:
                 if enemy_spawn_timer.check_timer():
